@@ -1,4 +1,4 @@
-import Bank from '../../img/bspb.jpg';
+import Bank from '../../img/trading-min.jpg';
 import LvbLogo from '../../components/LvbLogo';
 import SignInForm from '../../components/SignInForm';
 import SignInFooter from '../../components/SignInFooter';

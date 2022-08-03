@@ -596,7 +596,7 @@ p {
 }
 .logo {
     display: flex;
-    max-width: rem(258);
+    max-width: rem(143);
 }
 .lvb-logo {
     display: flex;
@@ -658,7 +658,8 @@ p {
 }
 .sign-in-form {
     .btn {
-        width: 100%;
+        padding-left: rem(57);
+        padding-right: rem(57);
         font: {
             size: rem(18);
         }
@@ -1154,15 +1155,6 @@ p {
             border-left: none;
         }
     }
-    .react-datepicker-wrapper {
-        // input{
-        //     font-size: rem(13);
-        // }
-        // .react-datepicker__close-icon{
-        //     right:rem(-30);
-        //     z-index: 200;
-        // }
-    }
 }
 
 .pagination {
@@ -1234,12 +1226,20 @@ p {
             display: flex;
             align-items: center;
             .icon {
-                opacity: 0.3;
+                opacity: 0.2;
                 margin-right: rem(15);
+                svg {
+                    path {
+                        stroke: rgba(0, 0, 0, 0.2);
+                    }
+                    rect {
+                        fill: rgba(0, 0, 0, 0.2);
+                    }
+                }
                 @include transition();
             }
             .title {
-                color: $black;
+                color: rgba(0, 0, 0, 0.2);
                 font: {
                     family: "PF Sans Pro";
                     size: rem(14);
@@ -1253,9 +1253,17 @@ p {
             .nav-item {
                 .icon {
                     opacity: 1;
+                    svg {
+                        path {
+                            stroke: #1bb29f;
+                        }
+                        rect {
+                            fill: #1bb29f;
+                        }
+                    }
                 }
                 .title {
-                    color: $primary-color;
+                    color: $black;
                 }
             }
         }
@@ -1273,6 +1281,18 @@ p {
     .sidebar-footer {
         .nav-link {
             margin-bottom: rem(43);
+            .nav-item {
+                .icon {
+                    svg {
+                        path {
+                            stroke: $primary-color;
+                        }
+                    }
+                }
+                .title {
+                    color: $black;
+                }
+            }
         }
         .vsk-logo {
             margin-bottom: rem(15);

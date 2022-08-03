@@ -1,23 +1,22 @@
-import React, { FC } from 'react';
-import Profile from '../img/profile.svg';
-import History from '../img/history.svg';
+import { FC, ReactElement } from 'react';
 import NavItem from './NavItem';
-
+import HistoryIcon from './icons/HistoryIcon';
+import ProfileIcon from './icons/ProfileIcon';
 export interface NavItemProps {
     link: string,
-    icon: string,
+    icon: ReactElement,
     title: string
 }
 
 const navigationItems: NavItemProps[] = [
     {
         link: '/admin/new',
-        icon: Profile,
+        icon: <ProfileIcon />,
         title: 'Новый полис'
     },
     {
         link: '/admin/history',
-        icon: History,
+        icon: <HistoryIcon />,
         title: 'История'
     }
 ];

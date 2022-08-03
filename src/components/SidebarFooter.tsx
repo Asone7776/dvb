@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import VskLogo from '../img/vsk-logo.svg';
-import Quit from '../img/exit.svg';
+import ExitIcon from '../components/icons/ExitIcon';
 import NavBtn from './NavBtn';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../redux/store';
@@ -18,7 +18,7 @@ const SidebarFooter: FC = () => {
         <>
             <div className="divider"></div>
             <div className="sidebar-footer">
-                <NavBtn onClick={logout} title='Выйти' icon={Quit} />
+                <NavBtn onClick={logout} title='Выйти' icon={<ExitIcon />} />
                 <div className="vsk-logo">
                     <img src={VskLogo} alt="vsk-logo" />
                 </div>

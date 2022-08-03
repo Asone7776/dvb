@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 
 interface NavBtnProps {
     onClick: () => void
-    icon: string
+    icon: ReactElement
     title: string
 }
 
@@ -14,7 +14,7 @@ const NavBtn: FC<NavBtnProps> = ({ onClick, icon, title }) => {
         >
             <div className="nav-item">
                 <div className="icon">
-                    <img src={icon} alt="nav-icon" />
+                    {icon}
                 </div>
                 <div className='title'>
                     {title}

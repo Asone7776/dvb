@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Logo from '../img/logo.svg';
+import Logo from '../img/dvb-min.png';
 import { Link } from 'react-router-dom';
 interface LogoComponentProps {
     linkTo?: string

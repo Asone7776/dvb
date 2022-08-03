@@ -43,7 +43,7 @@ const SignInForm: FC = () => {
                     })} />
                     {errors.password && <span className="error-message">{errors.password.message}</span>}
                 </div>
-                <button disabled={currentUser.loading} type="submit" className={cn('btn btn-gradiented', { 'loading': true })}>
+                <button disabled={currentUser.loading} type="submit" className={cn('btn btn-primary', { 'loading': true })}>
                     {currentUser.loading ? (
                         <Spinner />
                     ) : 'Войти'}
