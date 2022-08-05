@@ -22,13 +22,13 @@ const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, d
                 <div className="divider"></div>
                 <div className="info-block">
                     <span>Сумма полиса</span>
-                    <h4>{data && data.price ? `${formatPrice(data.price)} ₽` : ''}</h4>
+                    {/* <h4>{data && data.price ? `${formatPrice(data.price)} ₽` : ''}</h4> */}
                 </div>
                 <div className="divider"></div>
 
                 <div className="info-block">
                     <span className="mb-0">Стоимость полиса</span>
-                    <div className="pre-price">{data && data.premium ? `${formatPrice(data.premium)} ₽` : ''}</div>
+                    {/* <div className="pre-price">{data && data.premium ? `${formatPrice(data.premium)} ₽` : ''}</div> */}
                 </div>
                 <div>
                     <button type="submit" disabled={loading} className={cn('btn btn-blue', { 'loading': loading })}>

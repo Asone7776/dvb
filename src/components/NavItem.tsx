@@ -11,7 +11,6 @@ const NavItem: FC<NavItemProps> = ({ link, icon, title }) => {
             <div className="nav-item">
                 <div className="icon">
                     {icon}
-                    {/* <img src={icon} alt="nav-icon" /> */}
                 </div>
                 <div className='title'>
                     {title}

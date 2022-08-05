@@ -1,23 +1,30 @@
+import FrameOne from "./components/icons/FrameOne";
+import FrameTwo from "./components/icons/FrameTwo";
+import FrameThree from "./components/icons/FrameThree";
+
 export const cards = [
     {
-        price: 200000,
         tariffNumber: 0,
-        premium: 2000,
-        term: 12,
+        icon: FrameOne,
+        subTitle: "Защита бизнеса",
+        heading: "Страхование имущества в залоге",
+        content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
         link: '/admin/new/create'
     },
     {
-        price: 300000,
         tariffNumber: 1,
-        premium: 3000,
-        term: 12,
+        icon: FrameTwo,
+        subTitle: "Защита бизнеса",
+        heading: "Пакеты",
+        content: "Комплексное страхование имущества ЮЛ Коробочные решения",
         link: '/admin/new/create'
     },
     {
-        price: 400000,
         tariffNumber: 2,
-        premium: 4000,
-        term: 12,
+        icon: FrameThree,
+        subTitle: "Защита бизнеса",
+        heading: "Стандарт",
+        content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
         link: '/admin/new/create'
     }
 ];

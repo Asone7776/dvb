@@ -1,7 +1,12 @@
+import React, { ReactElement } from "react"
+
 export interface SafeItem {
     tariffNumber: number
-    price: number
-    premium: number
+    icon: React.FC
+    subTitle: string
+    heading: string
+    content: string
+    link: string
 }
 export interface SafesInitialState {
     data: SafeItem | null

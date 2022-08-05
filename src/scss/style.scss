@@ -379,7 +379,7 @@ html * {
         }
     }
     &.btn-blue {
-        background: $secondary-color;
+        background: $heading-green;
         border-radius: rem(4);
         border: none;
         padding-top: rem(10);
@@ -392,7 +392,7 @@ html * {
         }
         &:hover,
         &:focus {
-            background: darken($secondary-color, 10);
+            background: darken($heading-green, 10);
             color: #fff;
         }
         &:disabled {
@@ -874,7 +874,7 @@ p {
                 &.active {
                     transform: rotate(180deg);
                     path {
-                        fill: rgba($color: $secondary-color, $alpha: 1);
+                        fill: rgba($color: $primary-color, $alpha: 1);
                     }
                 }
             }
@@ -1230,16 +1230,16 @@ p {
                 margin-right: rem(15);
                 svg {
                     path {
-                        stroke: rgba(0, 0, 0, 0.2);
+                        stroke: rgba(0, 0, 0, 0.3);
                     }
                     rect {
-                        fill: rgba(0, 0, 0, 0.2);
+                        fill: rgba(0, 0, 0, 0.3);
                     }
                 }
                 @include transition();
             }
             .title {
-                color: rgba(0, 0, 0, 0.2);
+                color: rgba(0, 0, 0, 0.6);
                 font: {
                     family: "PF Sans Pro";
                     size: rem(14);
@@ -1343,6 +1343,9 @@ p {
             }
         }
         &.safe-card {
+            .icon {
+                margin-bottom: rem(20);
+            }
             .heading-item {
                 margin-bottom: rem(10);
                 .price-heading {
@@ -1352,11 +1355,25 @@ p {
                     }
                     margin-bottom: rem(5);
                 }
+                .sub-title {
+                    color: $heading-green;
+                    font: {
+                        family: "PF Sans Pro";
+                        size: rem(12);
+                    }
+                }
                 h3 {
                     font-size: rem(20);
                     &.primary-color {
                         color: $primary-color;
                     }
+                }
+                p {
+                    font: {
+                        size: rem(12);
+                    }
+                    line-height: rem(20);
+                    margin-bottom: 0;
                 }
                 &.bigger {
                     .price-heading {
@@ -1370,9 +1387,9 @@ p {
                 }
             }
             .card-bottom {
-                margin-top: rem(30);
-                .btn-blue {
-                    max-width: 100%;
+                margin-top: rem(20);
+                button {
+                    width: auto;
                 }
             }
         }
@@ -1380,6 +1397,7 @@ p {
     .orders {
         margin-top: rem(60);
         h4 {
+            color: $primary-color;
             font: {
                 family: "PF Sans Pro";
                 size: rem(20);
@@ -1390,6 +1408,12 @@ p {
 }
 .react-select-prefix__control {
     height: rem(44);
+    display: none;
+}
+.create-form {
+    .react-select-prefix__control {
+        height: rem(50);
+    }
 }
 .react-pdf__Page__annotations.annotationLayer {
     display: none;

@@ -26,7 +26,7 @@ const CreateForm = () => {
         defaultValues: {
             phone: "+7(___)___-__-__",
             organization_prefix: { value: 'ООО', label: 'ООО' },
-            premium: safe ? safe.premium : undefined
+            // premium: safe ? safe.premium : undefined
         }
     });
     useEffect(() => {

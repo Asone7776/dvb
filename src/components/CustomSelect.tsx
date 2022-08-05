@@ -14,8 +14,6 @@ const customStyles = {
     }),
     control: (provided: object) => ({
         ...provided,
-        minHeight: '50px',
-        height: '50px'
     }),
     dropdownIndicator: (provided: object) => ({
         ...provided,
