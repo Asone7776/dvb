@@ -56,7 +56,7 @@ const CreateForm = () => {
     const onSubmit = (data: createFormData) => {
         const objectToSend = {
             ...data,
-            tariff: safe ? safe.tariffNumber : 0
+            // tariff: safe ? safe.tariffNumber : 0
         };
         if (data.full_name && data.organization_prefix) {
             objectToSend.full_name = `${data.organization_prefix.value} ${data.full_name}`;

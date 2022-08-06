@@ -38,7 +38,7 @@ const EditForm = () => {
         const objectToSend = {
             ...data,
             id: params.id,
-            tariff: safe ? safe.tariffNumber : 0
+            // tariff: safe ? safe.tariffNumber : 0
         };
         dispatch(updatePolicy(objectToSend));
     };

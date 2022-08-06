@@ -10,6 +10,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import NotFound from "../components/NotFound";
 import CompletePolice from "../containers/polices/completePolice";
 import EditPolicy from "../containers/polices/edit";
+import PackagesList from "../containers/packages";
 const RoutesComponent: FC = () => {
     return (
         <BrowserRouter>
@@ -27,6 +28,7 @@ const RoutesComponent: FC = () => {
                         <Route path="new" >
                             <Route index element={<TodayOrders />} />
                             <Route path="create" element={<CreatePolicy />} />
+                            <Route path="packages" element={<PackagesList />} />
                             <Route path="edit/:id" element={<EditPolicy />} />
                             <Route path="complete" element={<CompletePolice />} />
                         </Route>

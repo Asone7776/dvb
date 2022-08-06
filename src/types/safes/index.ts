@@ -1,8 +1,6 @@
-import React, { ReactElement } from "react"
-
+import { FC } from "react"
 export interface SafeItem {
-    tariffNumber: number
-    icon: React.FC
+    icon: FC
     subTitle: string
     heading: string
     content: string
@@ -11,3 +9,19 @@ export interface SafeItem {
 export interface SafesInitialState {
     data: SafeItem | null
 }
+
+
+export interface Coverage {
+    description?: string
+    name: string
+    required: boolean
+    price: number
+}
+export interface SafeProgram {
+    tariffName: string
+    programCode: string
+    orderNo: 1 | 2 | 3
+    coverages: Coverage[]
+    premium?: number
+}
+
