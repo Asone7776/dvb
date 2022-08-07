@@ -1,12 +1,20 @@
 import { FC } from 'react';
 import { tariffs } from '../../constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BackIcon from '../../components/icons/BackIcon';
-interface PackagesListProps {
+import TariffCard from '../../components/TariffCard';
+import { saveItem } from '../../redux/slices/safeSlice';
+import { useAppDispatch } from '../../redux/store';
+import { SafeProgram } from '../../types/safes';
 
-}
 
-const PackagesList: FC<PackagesListProps> = () => {
+const PackagesList: FC = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const saveTariff = (tariff: SafeProgram) => {
+        dispatch(saveItem(tariff));
+        navigate('/admin/new/calculate');
+    }
     return (
         <div className='today-orders'>
             <div className="row h-100">
@@ -25,11 +33,23 @@ const PackagesList: FC<PackagesListProps> = () => {
                         </div>
                     </div>
                 </div>
-                {/* {cards.map((card, index) => (
+                {tariffs.filter((tariff) => tariff.orderNo !== 0).map((tariff, index) => (
                     <div className="col-4" key={`card-${index}`}>
-                        <SafeCard item={card} />
+                        <TariffCard tariff={tariff} onSelect={saveTariff} />
                     </div>
-                ))} */}
+                ))}
+                <div className="col-12">
+                    <div className="franshize">
+                        <div className="card">
+                            <h3>Франшиза</h3>
+                            <p>
+                                30 000 руб. на конструктивные элементы, отделку, инженерное оборудование<br />
+                                10 000 руб. на торговое / офисное оборудование (в т.ч. оргтехника) / мебель<br />
+                                7 дней на убытки от перерыва в хозяйственной деятельности
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

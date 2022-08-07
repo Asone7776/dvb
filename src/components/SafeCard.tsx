@@ -4,6 +4,7 @@ import { useAppDispatch } from '../redux/store';
 import { saveItem } from '../redux/slices/safeSlice';
 import { useNavigate } from 'react-router-dom';
 import { SafeItem } from '../types/safes/index';
+import { tariffs } from '../constants';
 
 interface SafeCardProps {
     item: SafeItem
@@ -13,13 +14,13 @@ const SafeCard: FC<SafeCardProps> = ({ item }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const saveSafeItem = () => {
-        // const { price, tariffNumber, premium } = item;
-        // dispatch(saveItem({
-        //     price,
-        //     premium,
-        //     tariffNumber
-        // }));
-        navigate(item.link);
+        if (item.orderNo != null) {
+            dispatch(saveItem(tariffs[item.orderNo]));
+            navigate('/admin/new/calculate');
+        }
+        if (item.link) {
+            navigate(item.link);
+        }
     }
     return (
         <div className="card safe-card">

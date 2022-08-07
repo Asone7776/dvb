@@ -4,23 +4,24 @@ export interface SafeItem {
     subTitle: string
     heading: string
     content: string
-    link: string
+    link?: string
+    orderNo?: number
 }
 export interface SafesInitialState {
-    data: SafeItem | null
+    data: SafeProgram | null
 }
 
 
 export interface Coverage {
     description?: string
-    name: string
+    code: string
     required: boolean
-    price: number
+    sum: number
 }
 export interface SafeProgram {
     tariffName: string
     programCode: string
-    orderNo: 1 | 2 | 3
+    orderNo: number
     coverages: Coverage[]
     premium?: number
 }

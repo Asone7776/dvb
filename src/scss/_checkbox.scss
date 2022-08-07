@@ -24,10 +24,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: rem(20);
-  width: rem(20);
+  height: rem(24);
+  width: rem(24);
   background-color: #fff;
-  border-radius: rem(4);
+  border-radius: 50%;
   border: rem(2) solid rgba($color: #000000, $alpha: 0.2);
 }
 
@@ -37,7 +37,7 @@
 }
 
 .check-wrapper input:checked ~ .checkmark {
-  background-color: $primary-color;
+  background-color: $heading-green;
   border-color: transparent;
   display: flex;
   justify-content: center;

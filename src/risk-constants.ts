@@ -45,7 +45,7 @@ export const TARIFF_NAMES = {
 };
 
 export const RISKS_DESCRIPTIONS = {
-    BUSINESS_PROTECTION_DESC: 'Недвижимое имущество(включая конструктивные элементы, внутреннюю отделку, инженерное оборудование)',
+    BUSINESS_PROTECTION_DESC: 'Недвижимое имущество',
     BUSINESS_PROTECTION_PP_DESC: "Движимое имущество",
     INTERRUPTION_DESC: 'Убытки от перерыва в деятельности',
     CIVIL_LIABILITY_DESC: 'Гражданская ответственность'

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { tariffs } from "../../constants";
 import { SafesInitialState } from "../../types/safes";
-import { cards } from "../../constants";
 const initialState: SafesInitialState = {
-    data: cards[0]
+    data: tariffs[0]
 }
 //TODO: Remove default value
 const safeSlice = createSlice({

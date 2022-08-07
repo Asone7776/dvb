@@ -3,10 +3,10 @@ import cn from "classnames";
 import { formatPrice } from "../functions";
 import Spinner from "./Spinner";
 import { Link } from 'react-router-dom';
-import { SafeItem } from '../types/safes';
+import { SafeProgram } from '../types/safes';
 interface InfoCardCreateProps {
     loading: boolean
-    data: SafeItem | null
+    data: SafeProgram | null
     organization_name?: string
 }
 
