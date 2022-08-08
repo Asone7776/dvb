@@ -21,6 +21,11 @@ export interface policeInitialStateType {
         error: any
         success: boolean
     },
+    calculatedPolicy: {
+        loading: boolean
+        data: number | null
+        error: any
+    },
     holdedPolice: OrderData | null
 }
 
@@ -37,7 +42,12 @@ export interface createFormData {
     kpp: number
 }
 
-// export interface sendCreateFormData extends Omit<createFormData, 'holder' | 'male'> {
-//     holder: number
-//     male: number
-// }
+export interface risk {
+    code: string
+    sum: number | string
+}
+
+export interface calculateRequestData {
+    tariff: number
+    risks: risk[]
+}

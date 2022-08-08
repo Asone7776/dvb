@@ -8,7 +8,6 @@ import PolicyPage from "../containers/polices";
 import CreatePolicy from "../containers/polices/create";
 import ProtectedRoute from "../components/ProtectedRoute";
 import NotFound from "../components/NotFound";
-import CompletePolice from "../containers/polices/completePolice";
 import EditPolicy from "../containers/polices/edit";
 import PackagesList from "../containers/packages";
 import Calculate from "../containers/polices/calculate";
@@ -32,7 +31,6 @@ const RoutesComponent: FC = () => {
                             <Route path="packages" element={<PackagesList />} />
                             <Route path="calculate" element={<Calculate />} />
                             <Route path="edit/:id" element={<EditPolicy />} />
-                            <Route path="complete" element={<CompletePolice />} />
                         </Route>
                         <Route path="history" element={<PolicyPage />} />
                     </Route>

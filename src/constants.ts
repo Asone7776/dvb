@@ -38,19 +38,22 @@ export const tariffs: SafeProgram[] = [
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_DESC,
                 code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION,
                 required: true,
-                sum: 5000000
+                sum: 5000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP_DESC,
                 code: RISK_CONSTANTS.MOVABLE_PROPERTY.BUSINESS_PROTECTION_PP,
-                required: false,
-                sum: 15000000
+                required: true,
+                sum: 15000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY_DESC,
                 code: RISK_CONSTANTS.CIVIL_LIABILITY,
                 required: false,
-                sum: 3000000
+                sum: 3000000,
+                asSlider: false
             }
         ]
     },
@@ -64,19 +67,22 @@ export const tariffs: SafeProgram[] = [
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_DESC,
                 code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION,
                 required: true,
-                sum: 5000000
+                sum: 5000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP_DESC,
                 code: RISK_CONSTANTS.MOVABLE_PROPERTY.BUSINESS_PROTECTION_PP,
                 required: true,
-                sum: 1000000
+                sum: 1000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY_DESC,
                 code: RISK_CONSTANTS.CIVIL_LIABILITY,
                 required: true,
-                sum: 500000
+                sum: 500000,
+                asSlider: false
             }
         ]
     },
@@ -90,19 +96,22 @@ export const tariffs: SafeProgram[] = [
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_DESC,
                 code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION,
                 required: true,
-                sum: 7000000
+                sum: 7000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP_DESC,
                 code: RISK_CONSTANTS.MOVABLE_PROPERTY.BUSINESS_PROTECTION_PP,
                 required: true,
-                sum: 1000000
+                sum: 1000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY_DESC,
                 code: RISK_CONSTANTS.CIVIL_LIABILITY,
                 required: true,
-                sum: 700000
+                sum: 700000,
+                asSlider: false
             }
         ]
     },
@@ -116,25 +125,29 @@ export const tariffs: SafeProgram[] = [
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_DESC,
                 code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION,
                 required: true,
-                sum: 10000000
+                sum: 10000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP_DESC,
                 code: RISK_CONSTANTS.MOVABLE_PROPERTY.BUSINESS_PROTECTION_PP,
                 required: true,
-                sum: 1000000
+                sum: 1000000,
+                asSlider: true
             },
             {
                 description: RISKS_DESCRIPTIONS.INTERRUPTION_DESC,
                 code: RISK_CONSTANTS.INTERRUPTION,
                 required: true,
-                sum: 100000
+                sum: 100000,
+                asSlider: false
             },
             {
                 description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY_DESC,
                 code: RISK_CONSTANTS.CIVIL_LIABILITY,
                 required: true,
-                sum: 1000000
+                sum: 1000000,
+                asSlider: false
             }
         ]
     }

@@ -17,6 +17,7 @@ export interface Coverage {
     code: string
     required: boolean
     sum: number
+    asSlider: boolean
 }
 export interface SafeProgram {
     tariffName: string

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { savePolicy, updatePolicy } from '../actions/policeActions';
+import { savePolicy, updatePolicy, calculatePolicy } from '../actions/policeActions';
 import { policeInitialStateType } from '../../types/polices/index';
 const initialState: policeInitialStateType = {
     savedPolicy: {
@@ -12,6 +12,11 @@ const initialState: policeInitialStateType = {
         loading: false,
         error: null,
         success: false
+    },
+    calculatedPolicy: {
+        loading: false,
+        data: null,
+        error: null
     },
     holdedPolice: null
 }
@@ -36,7 +41,12 @@ export const policeSlice = createSlice({
         },
         holdPolice: (state, action) => {
             state.holdedPolice = action.payload;
-        }
+        },
+        resetCalculatedPolicy: (state) => {
+            state.calculatedPolicy.loading = false;
+            state.calculatedPolicy.data = null;
+            state.calculatedPolicy.error = null;
+        },
     },
     extraReducers: (builder) => {
         // Create
@@ -74,9 +84,24 @@ export const policeSlice = createSlice({
             state.updatedPolicy.error = action.payload;
             state.updatedPolicy.success = false;
         })
+        // calculate
+        builder.addCase(calculatePolicy.pending, (state) => {
+            state.calculatedPolicy.loading = true;
+            state.calculatedPolicy.error = null;
+        })
+        builder.addCase(calculatePolicy.fulfilled, (state, action) => {
+            state.calculatedPolicy.loading = false;
+            state.calculatedPolicy.data = action.payload;
+            state.calculatedPolicy.error = null;
+        })
+        builder.addCase(calculatePolicy.rejected, (state, action) => {
+            state.calculatedPolicy.loading = false;
+            state.calculatedPolicy.error = action.payload;
+            state.calculatedPolicy.data = null;
+        })
     },
 })
 
-export const { resetSavedPolicy, holdPolice, resetSaveSuccess, resetUpdatePolicy } = policeSlice.actions;
+export const { resetSavedPolicy, holdPolice, resetSaveSuccess, resetUpdatePolicy, resetCalculatedPolicy } = policeSlice.actions;
 
 export default policeSlice.reducer;

@@ -30,7 +30,7 @@ export const TARIFF_NAMES = {
     ECONOM_TARIFF: {
         name: 'Эконом',
         code: "ECONOM",
-        premium:12600,
+        premium: 12600,
     },
     STANDART_TARIFF: {
         name: 'Стандарт',
@@ -44,7 +44,7 @@ export const TARIFF_NAMES = {
     }
 };
 
-export const RISKS_DESCRIPTIONS = {
+export const RISKS_DESCRIPTIONS: any = {
     BUSINESS_PROTECTION_DESC: 'Недвижимое имущество',
     BUSINESS_PROTECTION_PP_DESC: "Движимое имущество",
     INTERRUPTION_DESC: 'Убытки от перерыва в деятельности',

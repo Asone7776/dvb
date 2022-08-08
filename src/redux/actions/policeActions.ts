@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosAuth } from '../../axios-instances';
 import { failureNotify, successNotify } from "../../notifications";
-
 export const savePolicy = createAsyncThunk(
     "police/savePolicy",
     async (data: any, { rejectWithValue }) => {
@@ -38,4 +37,20 @@ export const updatePolicy = createAsyncThunk(
 );
 
 
+export const calculatePolicy = createAsyncThunk(
+    "police/calculatePolicy",
+    async (data: any, { rejectWithValue }) => {
+        try {
+            const response = await axiosAuth.post('/calculate', data);
+            successNotify('Успешно');
+            return response.data.data;
+        } catch (error: any) {
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
+            }
+            return rejectWithValue(error);
+        }
+    }
+);
 
