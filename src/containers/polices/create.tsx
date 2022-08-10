@@ -1,15 +1,17 @@
 import { FC } from "react";
 import CreateForm from "../../components/CreateForm";
+import { useAppSelector } from "../../redux/store";
 const CreatePolicy: FC = () => {
+    const safe = useAppSelector(state => state.safe.data);
+
     return (
         <div className="information">
             <div className="row">
                 <div className="col-12">
                     <div className="top-heading">
-                        <h3>Полис страхования “Карточный сейф”</h3>
-                        <p>
-                            С КВ 70%, страховой тариф 1%
-                        </p>
+                        {safe && (
+                            <h3>{safe.tariffName}</h3>
+                        )}
                     </div>
                     <CreateForm />
                 </div>

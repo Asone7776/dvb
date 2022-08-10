@@ -20,13 +20,13 @@ const TariffCard: FC<TariffCardProps> = ({ tariff, onSelect }) => {
                 <div className="risks">
                     <h4>Риски</h4>
                     <ul>
-                        {tariff.coverages.map((risk, index) => (
+                        {tariff.risks && tariff.risks.map((risk, index) => (
                             <li className='risk-item' key={`risk-${index}`}>
                                 <div className='risk-icon'>
-                                    {risk.required ? <CheckIcon /> : <CrossIcon />}
+                                    {risk.includes ? <CheckIcon /> : <CrossIcon />}
                                 </div>
                                 <p>
-                                    {risk.description}
+                                    {risk.name}
                                 </p>
                             </li>
                         ))}

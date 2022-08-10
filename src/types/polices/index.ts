@@ -30,16 +30,31 @@ export interface policeInitialStateType {
 }
 
 export interface createFormData {
-    full_name: string
-    term: number
-    phone: string
-    email: string
-    premium: number
-    insuranceSum: number
-    organization_name?: string
-    organization_prefix?: selectOption
+    kladr: selectOption | null
+    property_name: string
+    index: string
+    city: string
+    street: string
+    building: string
+    house: number
+    flat: number
     inn: number
     kpp: number
+    ogrn: number
+    phone: string
+    email: string
+    tariff: number
+    name: string
+    signer: string
+    position: string
+    attorney: string
+    attorney_date: string
+    organization_name?: string
+    legal_type?: selectOption
+    document_type?: selectOption
+    object_area: number
+    floor: number
+    number_of_floors: number
 }
 
 export interface risk {

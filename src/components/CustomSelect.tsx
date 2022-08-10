@@ -37,6 +37,8 @@ const CustomSelect: FC<CustomSelectProps> = ({ options, onChange, innerRef, ...f
             components={{ DropdownIndicator }}
             options={options}
             ref={innerRef}
+            classNamePrefix={'react-select-prefix'}
+            noOptionsMessage={()=>'Нет значений'}
             onChange={(val) => {
                 onChange(val);
             }}

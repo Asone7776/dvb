@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 import { SafeProgram } from '../types/safes';
 interface InfoCardCreateProps {
     loading: boolean
-    data: SafeProgram | null
+    data: any
     organization_name?: string
+    premium?: number
 }
 
-const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, data }) => {
-
+const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, data, premium }) => {
     return (
         <div className='card custom-card-small'>
             <div className={'info-wrapper'}>
@@ -20,24 +20,36 @@ const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, d
                     <h4>{organization_name ? organization_name : ''}</h4>
                 </div>
                 <div className="divider"></div>
-                <div className="info-block">
-                    <span>Сумма полиса</span>
-                    {/* <h4>{data && data.price ? `${formatPrice(data.price)} ₽` : ''}</h4> */}
-                </div>
-                <div className="divider"></div>
-
+                {data && data[0] ? (
+                    <>
+                        <div className="info-block">
+                            <span>Контактное лицо</span>
+                            <h4>{data[0]}</h4>
+                        </div>
+                        <div className="divider"></div>
+                    </>
+                ) : null}
+                {data && data[1] ? (
+                    <>
+                        <div className="info-block">
+                            <span>Объект страхования</span>
+                            <h4>{data[1].name}</h4>
+                        </div>
+                        <div className="divider"></div>
+                    </>
+                ) : null}
                 <div className="info-block">
                     <span className="mb-0">Стоимость полиса</span>
-                    {/* <div className="pre-price">{data && data.premium ? `${formatPrice(data.premium)} ₽` : ''}</div> */}
+                    <div className="pre-price">{premium ? `${formatPrice(premium)} ₽` : ''}</div>
                 </div>
                 <div>
-                    <button type="submit" disabled={loading} className={cn('btn btn-blue', { 'loading': loading })}>
+                    <button type="submit" disabled={loading} className={cn('btn btn-primary', { 'loading': loading })}>
                         {loading ? (
                             <Spinner />
-                        ) : 'Сформировать счёт'}
+                        ) : 'Заключить договор'}
                     </button>
                     <Link to={'/admin/new'}>
-                        <button className="btn btn-primary ml-0">
+                        <button className="btn btn-primary-transparent ml-0">
                             Отменить
                         </button>
                     </Link>

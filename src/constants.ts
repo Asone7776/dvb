@@ -24,7 +24,7 @@ export const cards: SafeItem[] = [
         subTitle: "Защита бизнеса",
         heading: "Стандарт",
         content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
-        orderNo: 2
+        link: '/admin/new/packages'
     }
 ];
 
@@ -84,6 +84,44 @@ export const tariffs: SafeProgram[] = [
                 sum: 500000,
                 asSlider: false
             }
+        ],
+        risks: [
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Удар молнии',
+                includes: true
+            },
+            {
+                name: 'Взрыв',
+                includes: true
+            },
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Падение летательных аппаратов',
+                includes: true
+            },
+            {
+                name: 'Гражданская ответственность',
+                includes: true
+            },
+            {
+                name: 'Действия воды',
+                includes: false
+            },
+            {
+                name: 'Противоправные действия 3-х лиц',
+                includes: false
+            },
+            {
+                name: 'Убытки от перерыва в хозяйственной деятельности',
+                includes: false
+            },
         ]
     },
     {
@@ -113,6 +151,44 @@ export const tariffs: SafeProgram[] = [
                 sum: 700000,
                 asSlider: false
             }
+        ],
+        risks: [
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Удар молнии',
+                includes: true
+            },
+            {
+                name: 'Взрыв',
+                includes: true
+            },
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Падение летательных аппаратов',
+                includes: true
+            },
+            {
+                name: 'Гражданская ответственность',
+                includes: true
+            },
+            {
+                name: 'Действия воды',
+                includes: true
+            },
+            {
+                name: 'Противоправные действия 3-х лиц',
+                includes: false
+            },
+            {
+                name: 'Убытки от перерыва в хозяйственной деятельности',
+                includes: false
+            },
         ]
     },
     {
@@ -149,6 +225,44 @@ export const tariffs: SafeProgram[] = [
                 sum: 1000000,
                 asSlider: false
             }
+        ],
+        risks: [
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Удар молнии',
+                includes: true
+            },
+            {
+                name: 'Взрыв',
+                includes: true
+            },
+            {
+                name: 'Пожар',
+                includes: true
+            },
+            {
+                name: 'Падение летательных аппаратов',
+                includes: true
+            },
+            {
+                name: 'Гражданская ответственность',
+                includes: true
+            },
+            {
+                name: 'Действия воды',
+                includes: true
+            },
+            {
+                name: 'Противоправные действия 3-х лиц',
+                includes: true
+            },
+            {
+                name: 'Убытки от перерыва в хозяйственной деятельности',
+                includes: true
+            },
         ]
     }
 ];

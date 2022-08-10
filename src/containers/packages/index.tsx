@@ -13,7 +13,7 @@ const PackagesList: FC = () => {
     const navigate = useNavigate();
     const saveTariff = (tariff: SafeProgram) => {
         dispatch(saveItem(tariff));
-        navigate('/admin/new/calculate');
+        navigate('/admin/new/create');
     }
     return (
         <div className='today-orders'>

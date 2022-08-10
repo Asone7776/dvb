@@ -19,12 +19,12 @@ const EditForm = () => {
 
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
-            full_name: police.data && police.data.order.insurer,
+            // full_name: police.data && police.data.order.insurer,
             inn: police.data && police.data.order.inn,
             kpp: police.data && police.data.order.kpp,
             email: police.data && police.data.order.email,
             phone: police.data && police.data.order.phone,
-            premium: police.data && police.data.order.amount,
+            // premium: police.data && police.data.order.amount,
         }
     });
     useEffect(() => {
@@ -33,7 +33,7 @@ const EditForm = () => {
             navigate('/admin/new');
         }
     }, [updatedSuccess.success]);
-    const full_name = watch(['full_name']);
+    // const full_name = watch(['full_name']);
     const onSubmit = (data: createFormData) => {
         const objectToSend = {
             ...data,
@@ -52,7 +52,7 @@ const EditForm = () => {
                                 <div className="form-group">
                                     <h4>Страхователь</h4>
                                 </div>
-                                <div className="row mb-3">
+                                {/* <div className="row mb-3">
                                     <div className="col-12">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Наименование организации' {...register('full_name', {
@@ -61,7 +61,7 @@ const EditForm = () => {
                                             {errors.full_name && <span className="error-message">{errors.full_name.message}</span>}
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row mb-3">
                                     <div className="col-12">
                                         <div className="form-group">
@@ -118,18 +118,18 @@ const EditForm = () => {
                                     />
                                     {errors.phone && <span className="error-message">{errors.phone.message}</span>}
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <h5>Страховая премия</h5>
                                     <input disabled className='form-control' type="text" placeholder='Страховая премия' {...register('premium', {
                                         required: requiredPattern
                                     })} />
                                     {errors.premium && <span className="error-message">{errors.premium.message}</span>}
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
                     <div className="col-4">
-                        <InfoCardCreate organization_name={prepareOrgName('', full_name[0] ? full_name[0] : '')} data={safe} loading={updatedSuccess.loading} />
+                        {/* <InfoCardCreate organization_name={prepareOrgName('', full_name[0] ? full_name[0] : '')} data={safe} loading={updatedSuccess.loading} /> */}
                     </div>
                 </div>
             </form>

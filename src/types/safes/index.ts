@@ -19,11 +19,16 @@ export interface Coverage {
     sum: number
     asSlider: boolean
 }
+export interface Risk {
+    name: string
+    includes: boolean
+}
 export interface SafeProgram {
     tariffName: string
     programCode: string
     orderNo: number
     coverages: Coverage[]
     premium?: number
+    risks?: Risk[]
 }
 

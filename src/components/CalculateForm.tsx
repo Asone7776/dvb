@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
 import { calculatePolicy } from '../redux/actions/policeActions';
 import InputRange from './InputRange';
 import { resetCalculatedPolicy } from '../redux/slices/policeSlice';
+import { saveItem } from '../redux/slices/safeSlice';
 const CalculateForm = () => {
     const dispatch = useAppDispatch();
     const safe = useAppSelector(state => state.safe.data);
@@ -13,7 +14,6 @@ const CalculateForm = () => {
     const codes = coverages?.map((item) => item.code);
     const [disabledValues, setDisabledValues] = useState(coverages?.map((item) => item.required));
     const defaultValues: any = {};
-
     coverages?.forEach((item) => {
         defaultValues[item.code] = item.sum;
     });
@@ -27,6 +27,15 @@ const CalculateForm = () => {
             dispatch(resetCalculatedPolicy());
         }
     }, []);
+
+    useEffect(() => {
+        if (police.data) {
+            dispatch(saveItem({
+                ...safe,
+                premium: police.data
+            }))
+        }
+    }, [police.data]);
 
     useEffect(() => {
         codes?.forEach((code) => {

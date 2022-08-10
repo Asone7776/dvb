@@ -13,7 +13,6 @@ interface CoveragesCardProps {
 }
 
 const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, price }) => {
-    // console.log(data);
     let customData = data ? Object.entries(data) : [];
     return (
         <div className='card custom-card-small'>
