@@ -9,6 +9,7 @@ export interface userListObject {
 }
 export interface selectOption {
     label: string | null
+    name?: string | null
     value: string | null | number
     __isNew__?: boolean
 }

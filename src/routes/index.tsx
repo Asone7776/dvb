@@ -11,6 +11,7 @@ import NotFound from "../components/NotFound";
 import EditPolicy from "../containers/polices/edit";
 import PackagesList from "../containers/packages";
 import Calculate from "../containers/polices/calculate";
+import CompletePolice from "../containers/polices/complete";
 const RoutesComponent: FC = () => {
     return (
         <BrowserRouter>
@@ -30,6 +31,7 @@ const RoutesComponent: FC = () => {
                             <Route path="create" element={<CreatePolicy />} />
                             <Route path="packages" element={<PackagesList />} />
                             <Route path="calculate" element={<Calculate />} />
+                            <Route path="complete" element={<CompletePolice />} />
                             <Route path="edit/:id" element={<EditPolicy />} />
                         </Route>
                         <Route path="history" element={<PolicyPage />} />

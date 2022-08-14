@@ -49,7 +49,7 @@ const TodayOrders: FC = () => {
             </div>
             <div className="row orders">
                 <div className="col-12">
-                    <h4>Оформлено сегодня</h4>
+                    <h3>Оформлено сегодня</h3>
                     <Accordion loading={orders.loading} list={orders.data && orders.data.data ? orders.data.data : []} />
                     {orders.data && orders.data.total > 20 && (
                         <OrdersPagination last_page={orders.data.last_page} onFilterChange={onFilterChange} initialPage={filterProps.page} />

@@ -30,9 +30,23 @@ export interface OrderItem {
     credit_institution: string
     created_at: string
     updated_at: string
+    inn: number
+    kpp: number
+    index: string
+    ogrn: number
+    house: number
+    flat: number
+    property_name: string
+    position: string
+    city: string
+    object_area: number
+    floor: number
+    number_of_floors: number
+    signer: string
 }
 
 export interface OrderData {
+    policy_number: OrderData | null
     invoice_url: any
     order: any
     current_page: number

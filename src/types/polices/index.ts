@@ -1,4 +1,4 @@
-import { OrderData } from "../orders"
+import { OrderData, OrderItem } from "../orders"
 import { selectOption } from "../users"
 
 
@@ -26,7 +26,7 @@ export interface policeInitialStateType {
         data: number | null
         error: any
     },
-    holdedPolice: OrderData | null
+    holdedPolice: OrderItem | null
 }
 
 export interface createFormData {

@@ -13,13 +13,13 @@ import { savePolicy } from '../redux/actions/policeActions';
 import { resetSaveSuccess } from '../redux/slices/policeSlice';
 import SearchableSelect from './SearchableSelect';
 import DateSelect from './DateSelect';
-import { Coverage } from '../types/safes';
+
 const CreateForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
     const safe = useAppSelector(state => state.safe.data);
-    // console.log(safe);
+    console.log(police);
     const [companyOptions] = useState<selectOption[]>([
         { value: 'OOO', label: 'OOO' },
         { value: 'PAO', label: 'PAO' },
@@ -32,7 +32,23 @@ const CreateForm = () => {
     ]);
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
-            phone: "+7(___)___-__-__",
+            name: 'test',
+            inn: 1234567891,
+            kpp: 123456789,
+            index: '123',
+            ogrn: 1234567891234,
+            email: 'test@gmail.com',
+            house: 123,
+            flat: 1,
+            property_name: 'test',
+            position: 'Ceo',
+            city: 'Moscow',
+            object_area: 123,
+            floor: 2,
+            number_of_floors: 5,
+            signer: 'Test signer',
+            // phone: "+7(___)___-__-__",
+            phone: "+7(999)999-99-99",
             legal_type: { value: 'OOO', label: 'OOO' },
             document_type: { value: 'Устав', label: 'Устав' },
             kladr: null
@@ -47,26 +63,14 @@ const CreateForm = () => {
     useEffect(() => {
         if (police.success) {
             dispatch(resetSaveSuccess());
-            // navigate('/admin/new/complete');
+            navigate('/admin/new/complete');
         }
     }, [police]);
-    const all = watch();
-    // console.log(all);
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
     const cardData = watch(['signer', 'kladr']);
-    // useEffect(() => {
-    //     if (prefix[0] && prefix[0].__isNew__) {
-    //         setCompanyOptions((prevState: any) => {
-    //             let array = [
-    //                 ...prevState,
-    //                 prefix[0]
-    //             ];
-    //             return array.filter((v, i, a) => a.indexOf(v) === i);
-    //         })
-    //     }
-    // }, [prefix[0]])
+
     const onSubmit = (data: any) => {
         let risks: any[] = [];
         if (safe?.coverages) {
@@ -86,10 +90,6 @@ const CreateForm = () => {
             tariff: safe ? safe.orderNo : 0,
             risks
         };
-        // if (data.full_name && data.organization_prefix) {
-        //     objectToSend.full_name = `${data.organization_prefix.value} ${data.full_name}`;
-        // }
-        // delete objectToSend.legal_type;
         console.log(objectToSend);
         dispatch(savePolicy(objectToSend));
     };

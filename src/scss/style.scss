@@ -305,6 +305,51 @@ html * {
             opacity: 0.5;
         }
     }
+    &.btn-primary-gray {
+        background: rgba($black, 0.1);
+        color: $black;
+        border-radius: rem(4);
+        border: none;
+        padding-top: rem(10);
+        padding-bottom: rem(10);
+        padding-left: rem(20);
+        padding-right: rem(20);
+        font: {
+            family: "PF Sans Pro";
+            size: rem(16);
+        }
+        &:hover,
+        &:focus {
+            background: darken(rgba($black, 0.1), 10);
+            color: $black;
+        }
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+    &.btn-primary-with-border {
+        background: transparent;
+        border-radius: rem(4);
+        border: none;
+        padding-top: rem(10);
+        padding-bottom: rem(10);
+        padding-left: rem(20);
+        padding-right: rem(20);
+        border: 2px solid $primary-color;
+        font: {
+            family: "PF Sans Pro";
+            size: rem(16);
+        }
+        &:hover,
+        &:focus {
+            background: darken($primary-color, 10);
+            color: #fff;
+        }
+        &:disabled {
+            opacity: 0.5;
+        }
+        color: $primary-color;
+    }
     &.btn-primary-tinned {
         background: $tinned-primary;
         border-radius: rem(4);
@@ -753,7 +798,7 @@ p {
     .top-heading {
         margin-bottom: rem(30);
         h3 {
-            color: $primary-color;
+            color: $black;
         }
     }
     h3 {
@@ -842,7 +887,29 @@ p {
                     }
                 }
             }
+            .info-item {
+                a {
+                    word-break: break-word;
+                }
+                h4 {
+                    font-size: rem(14);
+                    margin-bottom: rem(10);
+                    color: $black;
+                }
+                span {
+                    font-size: rem(12);
+                    color: rgba($black, 0.5);
+                    margin-bottom: rem(8);
+                    display: block;
+                }
+                h3 {
+                    font-size: rem(16);
+                    margin-bottom: rem(10);
+                    
+                }
+            }
         }
+        
     }
     .col {
         font-size: rem(14);
@@ -859,7 +926,7 @@ p {
                 color: $red;
             }
             .completed {
-                color: $primary-color;
+                color: $heading-green;
             }
         }
         .arrow {
@@ -1522,4 +1589,35 @@ p {
         }
     }
 }
+.complete-card {
+    .info-item {
+        // margin-bottom: rem(15);
+    }
+}
+.info-item {
+    a {
+        word-break: break-word;
+    }
+    h4 {
+        font-size: rem(14);
+        margin-bottom: rem(10);
+    }
+    span {
+        font-size: rem(12);
+        color: rgba($black, 0.5);
+        margin-bottom: rem(8);
+        display: block;
+    }
+    h3 {
+        font-size: rem(16);
+        margin-bottom: rem(10);
+    }
+}
+
+.complete-block {
+    .btn {
+        height: rem(50);
+    }
+}
+
 @import "responsive";

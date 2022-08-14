@@ -1,15 +1,27 @@
 import { FC, useState } from "react";
 import cn from "classnames";
-import { formatPrice, formatDate } from "../functions";
+import { formatPrice, formatDate, getStatusName } from "../functions";
 import { OrderItem } from "../types/orders";
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/store';
+import { holdPolice } from "../redux/slices/policeSlice";
+import InfoItem from '../components/InfoItem';
+import { RISKS_DESCRIPTIONS } from '../risk-constants';
+
 interface AccordionItemProps {
     item: OrderItem
     onStatusChange: (status: number) => void
 }
 const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [active, setActive] = useState(false);
     const onToggle = () => {
         setActive(!active);
+    }
+    const savePolice = () => {
+        dispatch(holdPolice(item));
+        navigate(`/admin/new/edit/${item.id}`);
     }
 
     return (
@@ -23,14 +35,14 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         <div className="col col-2 risk text-center">
                             {item.manager}
                         </div>
-                        <div className="col col-2 text-center price">
-                            {item.amount ? `${formatPrice(item.limit_amount)}₽` : null}
-                        </div>
                         <div className="col col-2 price">
                             {item.amount ? `${formatPrice(item.amount)}₽` : null}
                         </div>
                         <div className="col col-2 date text-center">
                             {item.created_at ? formatDate(item.created_at) : null}
+                        </div>
+                        <div className="col col-2 status text-right">
+                            <span className={cn({ 'completed': item.status === 3, 'not-completed': item.status === -1 })}>{getStatusName(item.status)}</span>
                         </div>
                         <div className="col col-1 d-flex justify-content-end">
                             <div className='arrow'>
@@ -45,106 +57,73 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
 
             <div id={`collapse-${item.id}`} className="collapse" aria-labelledby={`heading-${item.id}`}>
                 <div className="card-body">
+                    <div className="row">
+                        {item && item.options.map((coverage: any, index: number) => (
+                            <div className="col-3 mb-3" key={`acc-coverage-${index}`}>
+                                <InfoItem title={RISKS_DESCRIPTIONS[coverage.code + '_DESC']} subTitle={'Сумма страхования'}
+                                    info={`${formatPrice(coverage.sum)} рублей`}
+                                />
+                            </div>
+                        ))}
+                    </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading">Условия страхования</div>
-                                <div className="heading">КВ 70%, страховой тариф 1%</div>
-                            </div>
+                        <div className="col-3">
+                            <InfoItem subTitle={'Страхователь'}
+                                info={item.insurer}
+                            />
                         </div>
                         <div className="col-3">
-                            <div className="item">
-                                <div className="sub-heading">Сумма страхования</div>
-                                {item.limit_amount ? `${formatPrice(item.limit_amount)} ₽` : null}
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="item">
-                                <div className="sub-heading">Стоимость</div>
-                                {item.amount ? `${formatPrice(item.amount)} ₽` : null}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading">Страхователь</div>
-                                <div className="heading">{item.insurer ? item.insurer : null}</div>
-                            </div>
+                            <InfoItem subTitle={'Юридический адрес'}
+                                info={item.address}
+                            />
                         </div>
                         <div className="col-3">
-                            <div className="item">
-                                <div className="sub-heading">Номер телефона</div>
-                                <div className="heading">{item.phone ? item.phone : null}</div>
-                            </div>
+                            <InfoItem subTitle={'Объект страхования'}
+                                info={item.property_name}
+                            />
                         </div>
-                        <div className="col-4">
-                            <div className="item">
-                                <div className="sub-heading">E-mail</div>
-                                <div className="heading">{item.email ? item.email : null}</div>
-                            </div>
+                        <div className="col-3">
+                            <InfoItem subTitle={'Квадратура'}
+                                info={item.object_area}
+                            />
                         </div>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading">Страховая премия</div>
-                                <div className="heading">Фиксированная</div>
-                            </div>
+                        <div className="col-3">
+                            <InfoItem subTitle={'Контактное лицо'}
+                                info={item.manager}
+                            />
                         </div>
                         <div className="col-3">
-                            <div className="item">
-                                <div className="sub-heading">Дата начала страхования</div>
-                                <div className="heading">{item.created_at ? formatDate(item.created_at) : null}</div>
-                            </div>
+                            <InfoItem subTitle={'Номер телефона'}
+                                info={item.phone}
+                            />
                         </div>
-                        <div className="col-4">
-                            <div className="item">
-                                <div className="sub-heading">Срок страхования</div>
-                                <div className="heading">12 месяцев</div>
-                            </div>
+                        <div className="col-3">
+                            <InfoItem subTitle={'Email'}
+                                info={item.email}
+                            />
                         </div>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
                         <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading big">Полис</div>
-                                {item.policy_url && (
-                                    <a target={'_blank'} href={item.policy_url}>{item.policy_url}</a>
-                                )}
-                            </div>
+                            <InfoItem subTitle={'Полис страхования'}
+                                link={item.policy_url}
+                            />
                         </div>
-                        <div className="col-3">
-                            <div className="item">
-                                <div className="sub-heading big">Счёт на оплату</div>
-                                {item.invoice_url && (
-                                    <a target={'_blank'} href={item.invoice_url}>{item.invoice_url}</a>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="divider"></div>
-                    <div className="row">
                         <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading">Менеджер</div>
-                                <div className="heading">{item.manager ? item.manager : null}</div>
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className="item">
-                                <div className="sub-heading">e-mail</div>
-                                <div className="heading">{item.manager_email ? <a href={`mailto:${item.manager_email}`}>{item.manager_email}</a> : null}</div>
-                            </div>
+                            <InfoItem subTitle={'Счёт на оплату'}
+                                link={item.invoice_url}
+                            />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-12">
+                    <div className="row align-items-end">
+                        <div className="col-9">
                             <div className="item">
-                                <div className="sub-heading big">Статус оплаты</div>
+                                {/* <div className="sub-heading big">Статус оплаты</div> */}
                                 <div className="d-flex">
                                     <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
                                         onStatusChange(3);
@@ -163,6 +142,11 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="col-3">
+                            <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
+                                Редактировать
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -3,15 +3,15 @@ import cn from "classnames";
 import { formatPrice } from "../functions";
 import Spinner from "./Spinner";
 import { Link } from 'react-router-dom';
-import { SafeProgram } from '../types/safes';
 interface InfoCardCreateProps {
     loading: boolean
     data: any
     organization_name?: string
     premium?: number
+    submitTitle?: string
 }
 
-const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, data, premium }) => {
+const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, data, premium, submitTitle = 'Заключить договор' }) => {
     return (
         <div className='card custom-card-small'>
             <div className={'info-wrapper'}>
@@ -46,7 +46,7 @@ const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, d
                     <button type="submit" disabled={loading} className={cn('btn btn-primary', { 'loading': loading })}>
                         {loading ? (
                             <Spinner />
-                        ) : 'Заключить договор'}
+                        ) : submitTitle}
                     </button>
                     <Link to={'/admin/new'}>
                         <button className="btn btn-primary-transparent ml-0">
