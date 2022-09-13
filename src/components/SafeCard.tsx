@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { formatPrice } from '../functions';
 import { useAppDispatch } from '../redux/store';
 import { saveItem } from '../redux/slices/safeSlice';
 import { useNavigate } from 'react-router-dom';
@@ -43,9 +42,12 @@ const SafeCard: FC<SafeCardProps> = ({ item }) => {
                     </div>
                 </div>
                 <div className='card-bottom'>
-                    <button className='btn btn-primary' onClick={saveSafeItem}>
-                        Оформить
-                    </button>
+                    {item.external ? (
+                        <a className='btn btn-primary' target={'_blank'} href={item.link}>Оформить</a>
+                    ) : (
+                        <button className='btn btn-primary' onClick={saveSafeItem}>
+                            Оформить
+                        </button>)}
                 </div>
             </div>
         </div>

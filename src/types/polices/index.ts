@@ -48,7 +48,7 @@ export interface createFormData {
     signer: string
     position: string
     attorney: string
-    attorney_date: string
+    attorney_date: Date | null
     organization_name?: string
     legal_type?: selectOption
     document_type?: selectOption

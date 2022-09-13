@@ -840,6 +840,12 @@ p {
 }
 .accordion {
     width: 100%;
+    .tariff-type {
+        color: $primary-color;
+        font: {
+            family: "PF Sans Pro";
+        }
+    }
     .card {
         margin-bottom: rem(10);
         border: 0;
@@ -905,11 +911,9 @@ p {
                 h3 {
                     font-size: rem(16);
                     margin-bottom: rem(10);
-                    
                 }
             }
         }
-        
     }
     .col {
         font-size: rem(14);

@@ -6,6 +6,7 @@ export interface SafeItem {
     content: string
     link?: string
     orderNo?: number
+    external?: boolean
 }
 export interface SafesInitialState {
     data: SafeProgram | null

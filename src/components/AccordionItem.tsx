@@ -32,6 +32,9 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         <div className="col id">
                             {item.policy_number}
                         </div>
+                        <div className="col text-center tariff-type">
+                            {item.form && item.form.tariff && item.form.tariff === 1 ? ('Залог') : 'Пакет'}
+                        </div>
                         <div className="col col-2 risk text-center">
                             {item.manager}
                         </div>
@@ -80,12 +83,12 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         </div>
                         <div className="col-3">
                             <InfoItem subTitle={'Объект страхования'}
-                                info={item.property_name}
+                                info={item.form && item.form.property_name && item.form.property_name}
                             />
                         </div>
                         <div className="col-3">
                             <InfoItem subTitle={'Квадратура'}
-                                info={item.object_area}
+                                info={item.form && item.form.object_area && item.form.object_area}
                             />
                         </div>
                     </div>
@@ -123,7 +126,6 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row align-items-end">
                         <div className="col-9">
                             <div className="item">
-                                {/* <div className="sub-heading big">Статус оплаты</div> */}
                                 <div className="d-flex">
                                     <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
                                         onStatusChange(3);

@@ -10,21 +10,24 @@ export const cards: SafeItem[] = [
         subTitle: "Защита бизнеса",
         heading: "Страхование имущества в залоге",
         content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
-        orderNo: 0
+        orderNo: 0,
+        external: false,
     },
     {
         icon: FrameTwo,
         subTitle: "Защита бизнеса",
         heading: "Пакеты",
         content: "Комплексное страхование имущества ЮЛ Коробочные решения",
-        link: '/admin/new/packages'
+        link: '/admin/new/packages',
+        external: false,
     },
     {
         icon: FrameThree,
         subTitle: "Защита бизнеса",
         heading: "Стандарт",
         content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
-        link: '/admin/new/packages'
+        link: 'https://vskcorp.ru/shield',
+        external: true,
     }
 ];
 
@@ -266,3 +269,10 @@ export const tariffs: SafeProgram[] = [
         ]
     }
 ];
+
+export const documentTypes = {
+    DOCUMENT_TYPE_1: 'Доверенность',
+    DOCUMENT_TYPE_2: 'Устав',
+    DOCUMENT_TYPE_3: 'Свидетельство о государственной регистрации ФЛ в качестве ИП',
+    DOCUMENT_TYPE_4: 'Лист записи ЕГРИП'
+}

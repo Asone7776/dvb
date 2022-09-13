@@ -43,6 +43,9 @@ export interface OrderItem {
     floor: number
     number_of_floors: number
     signer: string
+    form: any
+    attorney: string
+    attorney_date: string
 }
 
 export interface OrderData {

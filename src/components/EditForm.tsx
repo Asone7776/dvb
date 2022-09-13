@@ -13,19 +13,23 @@ import { updatePolicy } from '../redux/actions/policeActions';
 import { resetSaveSuccess, resetUpdatePolicy } from '../redux/slices/policeSlice';
 import SearchableSelect from './SearchableSelect';
 import DateSelect from './DateSelect';
-
+import { documentTypes } from '../constants';
+import moment from 'moment';
+import { parse } from 'date-fns';
 const EditForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.updatedPolicy);
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
-    console.log('safe', safe);
-    console.log('edit data', editFormData);
+    // console.log('safe', safe);
+    // console.log('edit data', editFormData);
 
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
-        { value: 'Доверенность', label: 'Доверенность' }
+        { value: 'Доверенность', label: 'Доверенность' },
+        { value: 'Свидетельство о государственной регистрации ФЛ в качестве ИП', label: 'Свидетельство о государственной регистрации ФЛ в качестве ИП' },
+        { value: 'Лист записи ЕГРИП', label: 'Лист записи ЕГРИП' }
     ]);
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
@@ -44,13 +48,14 @@ const EditForm = () => {
             floor: editFormData?.floor,
             number_of_floors: editFormData?.number_of_floors,
             signer: editFormData?.signer,
-            // phone: "+7(___)___-__-__",
             phone: editFormData?.phone,
             document_type: { value: 'Устав', label: 'Устав' },
             kladr: {
                 name: "г Москва",
                 value: "7700000000000"
             },
+            attorney: editFormData?.attorney,
+            attorney_date: editFormData?.attorney ? parse(editFormData?.attorney, "dd-MM-yyyy", new Date()) : null,
             // premium: safe ? safe.premium : undefined
         }
     });
@@ -86,6 +91,7 @@ const EditForm = () => {
             kladr: data ? data.kladr.kladr_id : null,
             legal_type: data ? data.legal_type.value : null,
             document_type: data ? data.document_type.value : null,
+            attorney_date: data ? moment(data.attorney_date).format('DD.MM.Y') : null,
             tariff: safe ? safe.orderNo : 0,
             risks
         };
@@ -249,15 +255,8 @@ const EditForm = () => {
                                         }}
                                     />
                                 </div>
-                                {documentType && documentType[0]?.value === 'Доверенность' ? (
+                                {documentType && documentType[0]?.value !== documentTypes.DOCUMENT_TYPE_2 ? (
                                     <>
-                                        <div className="form-group">
-                                            <h5>Номер доверенности</h5>
-                                            <input placeholder='Номер доверенности' className='form-control' type="text" {...register('attorney', {
-                                                required: requiredPattern
-                                            })} />
-                                            {errors.attorney && <span className="error-message">{errors.attorney.message}</span>}
-                                        </div>
                                         <div className="form-group">
                                             <h5>Дата доверенности</h5>
                                             <Controller
@@ -274,6 +273,18 @@ const EditForm = () => {
                                             />
                                         </div>
                                         {errors.attorney_date && <span className="error-message">{errors.attorney_date.message}</span>}
+                                    </>
+                                )
+                                    : null}
+                                {documentType && documentType[0]?.value === documentTypes.DOCUMENT_TYPE_1 || documentType[0]?.value === documentTypes.DOCUMENT_TYPE_3 ? (
+                                    <>
+                                        <div className="form-group">
+                                            <h5>Доверенность</h5>
+                                            <input placeholder='Доверенность' className='form-control' type="text" {...register('attorney', {
+                                                required: requiredPattern
+                                            })} />
+                                            {errors.attorney && <span className="error-message">{errors.attorney.message}</span>}
+                                        </div>
                                     </>
                                 )
                                     : null}

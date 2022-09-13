@@ -13,11 +13,9 @@ const DateSelect = forwardRef<any, any>(({value, onChange, ...rest }, ref) => {
             selected={value}
             placeholderText={'Дата'}
             className={'form-control'}
-            dateFormat="dd-MM-Y"
+            dateFormat="dd-MM-yyyy"
             onChange={(date) => {
-                console.log(date);
                 onChange(date);
-
             }}
             isClearable={true}
             ref={ref}
