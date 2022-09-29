@@ -10,12 +10,13 @@ import { selectOption } from '../types/users';
 import { useNavigate } from 'react-router-dom';
 import { prepareOrgName } from '../functions';
 import { updatePolicy } from '../redux/actions/policeActions';
-import { resetSaveSuccess, resetUpdatePolicy } from '../redux/slices/policeSlice';
+import { resetUpdatePolicy } from '../redux/slices/policeSlice';
 import SearchableSelect from './SearchableSelect';
 import DateSelect from './DateSelect';
 import { documentTypes } from '../constants';
 import moment from 'moment';
 import { parse } from 'date-fns';
+import ReactTooltip from 'react-tooltip';
 const EditForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ const EditForm = () => {
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
         { value: 'Доверенность', label: 'Доверенность' },
-        { value: 'Свидетельство о государственной регистрации ФЛ в качестве ИП', label: 'Свидетельство о государственной регистрации ФЛ в качестве ИП' },
+        { value: 'Свидетельство о государственной регистрации ФЛ в качестве ИП', label: 'ИП' },
         { value: 'Лист записи ЕГРИП', label: 'Лист записи ЕГРИП' }
     ]);
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
@@ -95,7 +96,6 @@ const EditForm = () => {
             tariff: safe ? safe.orderNo : 0,
             risks
         };
-        console.log(objectToSend);
         dispatch(updatePolicy(objectToSend));
     };
     return (
@@ -167,8 +167,8 @@ const EditForm = () => {
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>E-mail</h5>
-                                    <input placeholder='E-mail' className='form-control' type="email" {...register('email', {
+                                    <h5>E-mail клиента</h5>
+                                    <input placeholder='E-mail клиента' className='form-control' type="email" {...register('email', {
                                         required: requiredPattern,
                                         pattern: emailPattern
                                     })} />
@@ -185,19 +185,24 @@ const EditForm = () => {
                                 <div className="form-group">
                                     <h5>Дом</h5>
                                     <input placeholder='Дом' className='form-control' type="text" {...register('house', {
-                                        required: requiredPattern
+                                        required: false
                                     })} />
                                     {errors.house && <span className="error-message">{errors.house.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Квартира</h5>
-                                    <input placeholder='Квартира' className='form-control' type="text" {...register('flat', {
-                                        required: requiredPattern
+                                    <h5>Номер офиса</h5>
+                                    <input placeholder='Номер офиса' className='form-control' type="text" {...register('flat', {
+                                        required: false
                                     })} />
                                     {errors.flat && <span className="error-message">{errors.flat.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Название недвижимости</h5>
+                                    <h5>
+                                        <a data-tip data-for="build-name-tooltip">Название недвижимости</a>
+                                        <ReactTooltip id='build-name-tooltip' place="top" type="dark" effect="float" >
+                                            («Офис, магазин, салон красоты, детский сад»)
+                                        </ReactTooltip>
+                                    </h5>
                                     <input className='form-control' type="text" placeholder='Название недвижимости' {...register('property_name', {
                                         required: requiredPattern
                                     })} />
@@ -218,7 +223,12 @@ const EditForm = () => {
                                     {errors.position && <span className="error-message">{errors.position.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Юридический адрес</h5>
+                                    <h5>
+                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
+                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
+                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
+                                        </ReactTooltip>
+                                    </h5>
                                     <Controller
                                         name="kladr"
                                         control={control}
@@ -233,15 +243,15 @@ const EditForm = () => {
                                     />
                                     {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <h5>Город</h5>
                                     <input placeholder='Город' className='form-control' type="text" {...register('city', {
                                         required: requiredPattern
                                     })} />
                                     {errors.city && <span className="error-message">{errors.city.message}</span>}
-                                </div>
+                                </div> */}
                                 <div className="form-group">
-                                    <h5>Тип документа</h5>
+                                    <h5>Действует на основании</h5>
                                     <Controller
                                         name="document_type"
                                         control={control}
@@ -289,7 +299,7 @@ const EditForm = () => {
                                 )
                                     : null}
                                 <div className="form-group">
-                                    <h5>Номер телефона</h5>
+                                    <h5>Телефон клиента</h5>
                                     <Controller
                                         control={control}
                                         name="phone"

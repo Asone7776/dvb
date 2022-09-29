@@ -14,6 +14,7 @@ interface CoveragesCardProps {
 
 const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, price }) => {
     let customData = data ? Object.entries(data) : [];
+    // console.log(customData);
     return (
         <div className='card custom-card-small'>
             <div className={'info-wrapper'}>
@@ -21,7 +22,7 @@ const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, 
                     disabledValues && disabledValues[index] && (
                         <div key={`info-block-${index}`}>
                             <div className="info-block">
-                                <span>{RISKS_DESCRIPTIONS[`${key}_DESC`]}</span>
+                                <span>{RISKS_DESCRIPTIONS[key]}</span>
                                 <span className="gray-heading">Сумма страхования</span>
                                 <h4>{`${formatPrice(value)} ₽`}</h4>
                             </div>
@@ -34,6 +35,11 @@ const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, 
                     <h4 className="pre-price">{price ? formatPrice(price) : 0} ₽</h4>
                 </div>
                 <div>
+                    <button type="submit" disabled={loading} className={cn('btn btn-primary', { 'loading': loading })}>
+                        {loading ? (
+                            <Spinner />
+                        ) : 'Рассчитать'}
+                    </button>
                     {price ? (
                         <Link to={'/admin/new/create'} >
                             <button className="btn btn-primary mb-3">
@@ -41,11 +47,6 @@ const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, 
                             </button>
                         </Link>
                     ) : null}
-                    <button type="submit" disabled={loading} className={cn('btn btn-primary', { 'loading': loading })}>
-                        {loading ? (
-                            <Spinner />
-                        ) : 'Сформировать'}
-                    </button>
                     <Link to={'/admin/new'}>
                         <button className="btn btn-primary-transparent ml-0">
                             Отменить

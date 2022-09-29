@@ -81,7 +81,7 @@ const InputRange: FC<InputRangeProps> = ({ withInput = false, onChangeValue, suf
 
     useEffect(() => {
         changeBg(currentValue);
-    }, [currentValue]);
+    }, [currentValue, max]);
 
     const changeBg = (val: number) => {
         setBgSize((val - Number(min)) * 100 / (Number(max) - Number(min)) + '% 100%');

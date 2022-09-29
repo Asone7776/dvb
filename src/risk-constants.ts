@@ -1,6 +1,8 @@
 export const RISK_CONSTANTS = {
     REAL_ESTATE: {
         BUSINESS_PROTECTION: 'BUSINESS_PROTECTION',
+        BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT: 'BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT',
+        BUSINESS_PROTECTION_CONSTRUCTIVE: 'BUSINESS_PROTECTION_CONSTRUCTIVE',
         VEHICLE_COLLISION: 'VEHICLE_COLLISION',
         NATURAL: 'NATURAL',
         ENGINEERING_SYSTEM_ACCIDENT: 'ENGINEERING_SYSTEM_ACCIDENT',
@@ -45,8 +47,9 @@ export const TARIFF_NAMES = {
 };
 
 export const RISKS_DESCRIPTIONS: any = {
-    BUSINESS_PROTECTION_DESC: 'Недвижимое имущество',
-    BUSINESS_PROTECTION_PP_DESC: "Движимое имущество",
+    BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT: 'Отделка и инженерное оборудование',
+    BUSINESS_PROTECTION_CONSTRUCTIVE: 'Конструктивные элементы',
+    BUSINESS_PROTECTION_PP: "Движимое имущество",
     INTERRUPTION_DESC: 'Убытки от перерыва в деятельности',
-    CIVIL_LIABILITY_DESC: 'Гражданская ответственность'
+    CIVIL_LIABILITY: 'Гражданская ответственность'
 }

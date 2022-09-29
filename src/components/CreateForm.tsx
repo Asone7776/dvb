@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import ParentSimpleSelect from './ParentSimpleSelect';
 import InfoCardCreate from './InfoCardCreate';
 import NumberFormat from 'react-number-format';
-import { emailPattern, requiredPattern } from '../functions';
+import { emailPattern, requiredPattern, minPattern, maxPattern } from '../functions';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { createFormData } from '../types/polices';
 import { selectOption } from '../types/users';
@@ -15,16 +15,20 @@ import SearchableSelect from './SearchableSelect';
 import DateSelect from './DateSelect';
 import { documentTypes } from '../constants';
 import moment from 'moment';
+import ReactTooltip from 'react-tooltip';
+<ReactTooltip place="top" type="dark" effect="float" />
+
 const CreateForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
     const safe = useAppSelector(state => state.safe.data);
-    console.log(police);
+
     const [companyOptions] = useState<selectOption[]>([
         { value: 'OOO', label: 'OOO' },
         { value: 'PAO', label: 'PAO' },
         { value: 'AO', label: 'AO' },
+        { value: 'IP', label: 'ИП ' }
     ]);
 
     const [documentTypeOptions] = useState<selectOption[]>([
@@ -72,6 +76,7 @@ const CreateForm = () => {
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
     const cardData = watch(['signer', 'kladr']);
+    const currentType = prefix && prefix[0] && prefix[0].value;
 
     const onSubmit = (data: any) => {
         let risks: any[] = [];
@@ -97,6 +102,7 @@ const CreateForm = () => {
         dispatch(savePolicy(objectToSend));
     };
     return (
+
         <div className="pre-form create-form">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
@@ -134,21 +140,15 @@ const CreateForm = () => {
                                     <h5>ИНН</h5>
                                     <input className='form-control' type="text" placeholder='ИНН' {...register('inn', {
                                         required: requiredPattern,
-                                        minLength: {
-                                            value: 10,
-                                            message: 'Минимальная длина 10'
-                                        },
-                                        maxLength: {
-                                            value: 10,
-                                            message: 'Максимальная длина 10'
-                                        }
+                                        minLength: currentType === "IP" ? minPattern(10) : minPattern(12),
+                                        maxLength: currentType === "IP" ? maxPattern(10) : maxPattern(12),
                                     })} />
                                     {errors.inn && <span className="error-message">{errors.inn.message}</span>}
                                 </div>
                                 <div className="form-group">
                                     <h5>КПП</h5>
                                     <input placeholder='КПП' className='form-control' type="text" {...register('kpp', {
-                                        required: requiredPattern,
+                                        required: currentType === "IP" ? false : requiredPattern,
                                         minLength: {
                                             value: 9,
                                             message: 'Минимальная длина 9'
@@ -183,8 +183,8 @@ const CreateForm = () => {
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>E-mail</h5>
-                                    <input placeholder='E-mail' className='form-control' type="email" {...register('email', {
+                                    <h5>E-mail клиента</h5>
+                                    <input placeholder='E-mail клиента' className='form-control' type="email" {...register('email', {
                                         required: requiredPattern,
                                         pattern: emailPattern
                                     })} />
@@ -201,19 +201,24 @@ const CreateForm = () => {
                                 <div className="form-group">
                                     <h5>Дом</h5>
                                     <input placeholder='Дом' className='form-control' type="text" {...register('house', {
-                                        required: requiredPattern
+                                        required: false
                                     })} />
                                     {errors.house && <span className="error-message">{errors.house.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Квартира</h5>
-                                    <input placeholder='Квартира' className='form-control' type="text" {...register('flat', {
-                                        required: requiredPattern
+                                    <h5>Номер офиса</h5>
+                                    <input placeholder='Номер офиса' className='form-control' type="text" {...register('flat', {
+                                        required: false
                                     })} />
                                     {errors.flat && <span className="error-message">{errors.flat.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Название недвижимости</h5>
+                                    <h5>
+                                        <a data-tip data-for="build-name-tooltip">Название недвижимости</a>
+                                        <ReactTooltip id='build-name-tooltip' place="top" type="dark" effect="float" >
+                                            («Офис, магазин, салон красоты, детский сад»)
+                                        </ReactTooltip>
+                                    </h5>
                                     <input className='form-control' type="text" placeholder='Название недвижимости' {...register('property_name', {
                                         required: requiredPattern
                                     })} />
@@ -229,12 +234,17 @@ const CreateForm = () => {
                                 <div className="form-group">
                                     <h5>Должность</h5>
                                     <input placeholder='Должность' className='form-control' type="text" {...register('position', {
-                                        required: requiredPattern
+                                        required: currentType === 'IP' ? requiredPattern : false
                                     })} />
                                     {errors.position && <span className="error-message">{errors.position.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Юридический адрес</h5>
+                                    <h5>
+                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
+                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
+                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
+                                        </ReactTooltip>
+                                    </h5>
                                     <Controller
                                         name="kladr"
                                         control={control}
@@ -249,15 +259,15 @@ const CreateForm = () => {
                                     />
                                     {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <h5>Город</h5>
                                     <input placeholder='Город' className='form-control' type="text" {...register('city', {
                                         required: requiredPattern
                                     })} />
                                     {errors.city && <span className="error-message">{errors.city.message}</span>}
-                                </div>
+                                </div> */}
                                 <div className="form-group">
-                                    <h5>Тип документа</h5>
+                                    <h5>Действует на основании</h5>
                                     <Controller
                                         name="document_type"
                                         control={control}
@@ -305,7 +315,7 @@ const CreateForm = () => {
                                 )
                                     : null}
                                 <div className="form-group">
-                                    <h5>Номер телефона</h5>
+                                    <h5>Телефон клиента</h5>
                                     <Controller
                                         control={control}
                                         name="phone"

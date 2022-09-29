@@ -21,14 +21,14 @@ export const cards: SafeItem[] = [
         link: '/admin/new/packages',
         external: false,
     },
-    {
-        icon: FrameThree,
-        subTitle: "Защита бизнеса",
-        heading: "Стандарт",
-        content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
-        link: 'https://vskcorp.ru/shield',
-        external: true,
-    }
+    // {
+    //     icon: FrameThree,
+    //     subTitle: "Защита бизнеса",
+    //     heading: "Стандарт",
+    //     content: "Комплексное страхование имущества ЮЛ Индивидуальный расчет",
+    //     link: 'https://vskcorp.ru/shield',
+    //     external: true,
+    // }
 ];
 
 export const tariffs: SafeProgram[] = [
@@ -38,25 +38,32 @@ export const tariffs: SafeProgram[] = [
         orderNo: 0,
         coverages: [
             {
-                description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_DESC,
-                code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION,
-                required: true,
+                description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_CONSTRUCTIVE,
+                code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION_CONSTRUCTIVE,
+                required: false,
+                sum: 10000000,
+                asSlider: true
+            },
+            {
+                description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT,
+                code: RISK_CONSTANTS.REAL_ESTATE.BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT,
+                required: false,
                 sum: 5000000,
                 asSlider: true
             },
             {
-                description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP_DESC,
+                description: RISKS_DESCRIPTIONS.BUSINESS_PROTECTION_PP,
                 code: RISK_CONSTANTS.MOVABLE_PROPERTY.BUSINESS_PROTECTION_PP,
-                required: true,
-                sum: 15000000,
+                required: false,
+                sum: 5000000,
                 asSlider: true
             },
             {
-                description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY_DESC,
+                description: RISKS_DESCRIPTIONS.CIVIL_LIABILITY,
                 code: RISK_CONSTANTS.CIVIL_LIABILITY,
                 required: false,
                 sum: 3000000,
-                asSlider: false
+                asSlider: true
             }
         ]
     },

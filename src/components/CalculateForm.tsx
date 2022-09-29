@@ -6,16 +6,23 @@ import { calculatePolicy } from '../redux/actions/policeActions';
 import InputRange from './InputRange';
 import { resetCalculatedPolicy } from '../redux/slices/policeSlice';
 import { saveItem } from '../redux/slices/safeSlice';
+const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const CalculateForm = () => {
     const dispatch = useAppDispatch();
     const safe = useAppSelector(state => state.safe.data);
     const police = useAppSelector(state => state.police.calculatedPolicy);
     const coverages = safe?.coverages;
     const codes = coverages?.map((item) => item.code);
-    const [disabledValues, setDisabledValues] = useState(coverages?.map((item) => item.required));
+    const [disabledValues, setDisabledValues] = useState(coverages?.map((item, index) => {
+        if (index === 0) {
+            return true;
+        }
+        return item.required;
+    }));
     const defaultValues: any = {};
     coverages?.forEach((item) => {
-        defaultValues[item.code] = item.sum;
+        // defaultValues[item.code] = item.sum;
+        defaultValues[item.code] = 0;
     });
 
     const { getValues, setValue, watch, register, handleSubmit } = useForm<any>({
@@ -44,7 +51,6 @@ const CalculateForm = () => {
     }, [register]);
     const allFields = watch();
 
-
     const changeDisabled = (index: number, checked: boolean) => {
         if (disabledValues) {
             let values = [...disabledValues];
@@ -63,9 +69,27 @@ const CalculateForm = () => {
             }
             return;
         }).filter(item => item != null);
+        const arrayOfSum = risks.filter(item => allowed.includes(item!.code)).map(item => item!.sum).reduce((prev, next) => {
+            return Number(prev) + Number(next);
+        });
+        const otherRisks = risks.filter(item => !allowed.includes(item!.code));
+        const variants = [...disabledValues!].splice(0, 3).map((variant, index) => {
+            if (variant) {
+                return index + 1;
+            } else {
+                return;
+            }
+        }).filter(item => item);
         const objectToSend = {
             tariff: safe ? safe.orderNo : 0,
-            risks
+            risks: [
+                {
+                    code: "BUSINESS_PROTECTION",
+                    sum: arrayOfSum
+                },
+                ...otherRisks
+            ],
+            variants
         };
         dispatch(calculatePolicy(objectToSend));
     };
@@ -85,7 +109,35 @@ const CalculateForm = () => {
                                                         <input type="checkbox" onChange={(e) => {
                                                             let { checked } = e.target;
                                                             if (!risk.required) {
-                                                                changeDisabled(index, checked);
+                                                                if (index === 1) {
+                                                                    if (disabledValues) {
+                                                                        let values = [...disabledValues];
+                                                                        if (disabledValues[0] && disabledValues[1]) {
+                                                                            values[1] = false;
+                                                                        }
+                                                                        if (disabledValues[0] && !disabledValues[1]) {
+                                                                            values[1] = true;
+                                                                        }
+                                                                        if (!disabledValues[0] && !disabledValues[1]) {
+                                                                            values[1] = true;
+                                                                        }
+                                                                        setDisabledValues(values);
+                                                                    }
+                                                                } else {
+                                                                    if (index === 0) {
+                                                                        if (disabledValues) {
+                                                                            if (disabledValues[0]) {
+                                                                                if (disabledValues[1]) {
+                                                                                    changeDisabled(index, checked);
+                                                                                }
+                                                                            } else {
+                                                                                changeDisabled(index, checked);
+                                                                            }
+                                                                        }
+                                                                    } else {
+                                                                        changeDisabled(index, checked);
+                                                                    }
+                                                                }
                                                             }
                                                         }} checked={disabledValues && disabledValues[index]} />
                                                         <span className="checkmark">
@@ -107,7 +159,9 @@ const CalculateForm = () => {
                                                 defaultValue={getValues(risk.code)}
                                                 min={0}
                                                 max={risk.sum}
+                                                // max={index < 3 && disabledValues && disabledValues[2] ? 20000000 : risk.sum}
                                                 onChangeValue={(value) => {
+                                                    // console.log('val',value);
                                                     setValue(risk.code, value);
                                                 }}
                                             />
