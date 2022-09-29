@@ -24,6 +24,7 @@ const CompletePolice: FC = () => {
             successNotify(response.data.data);
             setSendLoading(false);
             dispatch(resetSavedPolicy());
+            successNotify('Заключенный договор направлен на электронную почту клиента и менеджера Банка');
             navigate('/admin/new');
         } catch (error: any) {
             setSendLoading(false);

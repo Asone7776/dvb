@@ -47,6 +47,7 @@ export const TARIFF_NAMES = {
 };
 
 export const RISKS_DESCRIPTIONS: any = {
+    BUSINESS_PROTECTION: 'Недвижимое имущество',
     BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT: 'Отделка и инженерное оборудование',
     BUSINESS_PROTECTION_CONSTRUCTIVE: 'Конструктивные элементы',
     BUSINESS_PROTECTION_PP: "Движимое имущество",

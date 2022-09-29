@@ -63,7 +63,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row">
                         {item && item.options.map((coverage: any, index: number) => (
                             <div className="col-3 mb-3" key={`acc-coverage-${index}`}>
-                                <InfoItem title={RISKS_DESCRIPTIONS[coverage.code + '_DESC']} subTitle={'Сумма страхования'}
+                                <InfoItem title={RISKS_DESCRIPTIONS[coverage.code]} subTitle={'Сумма страхования'}
                                     info={`${formatPrice(coverage.sum)} рублей`}
                                 />
                             </div>

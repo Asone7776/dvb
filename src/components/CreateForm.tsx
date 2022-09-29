@@ -16,17 +16,19 @@ import DateSelect from './DateSelect';
 import { documentTypes } from '../constants';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
-<ReactTooltip place="top" type="dark" effect="float" />
+const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
+
 
 const CreateForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
     const safe = useAppSelector(state => state.safe.data);
-
+    // console.log(police);
+    // console.log(safe);
     const [companyOptions] = useState<selectOption[]>([
         { value: 'OOO', label: 'OOO' },
-        { value: 'PAO', label: 'PAO' },
+        { value: 'PAO', label: 'ПАО' },
         { value: 'AO', label: 'AO' },
         { value: 'IP', label: 'ИП ' }
     ]);
@@ -80,6 +82,7 @@ const CreateForm = () => {
 
     const onSubmit = (data: any) => {
         let risks: any[] = [];
+
         if (safe?.coverages) {
             risks = safe.coverages.map((coverage) => {
                 return {
@@ -98,7 +101,27 @@ const CreateForm = () => {
             tariff: safe ? safe.orderNo : 0,
             risks
         };
-        // console.log(objectToSend);
+        if (safe && safe.orderNo === 0) {
+            const otherRisks = risks.filter(item => !allowed.includes(item!.code));
+            const arrayOfSum = risks.filter(item => allowed.includes(item!.code)).map(item => item!.sum).reduce((prev, next) => {
+                return Number(prev) + Number(next);
+            });
+            objectToSend.risks = [
+                {
+                    code: "BUSINESS_PROTECTION",
+                    sum: arrayOfSum
+                },
+                ...otherRisks
+            ];
+            const variants = safe.coverages.filter(item => allowed.includes(item.code)).map((variant, index) => {
+                if (variant) {
+                    return index + 1;
+                } else {
+                    return;
+                }
+            });
+            objectToSend.variants = variants;
+        }
         dispatch(savePolicy(objectToSend));
     };
     return (

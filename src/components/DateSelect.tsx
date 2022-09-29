@@ -13,11 +13,14 @@ const DateSelect = forwardRef<any, any>(({value, onChange, ...rest }, ref) => {
             selected={value}
             placeholderText={'Дата'}
             className={'form-control'}
-            dateFormat="dd-MM-yyyy"
+            dateFormat="dd.MM.yyyy"
             onChange={(date) => {
                 onChange(date);
             }}
             isClearable={true}
+            peekNextMonth
+            showMonthDropdown
+            showYearDropdown
             ref={ref}
             {...rest}
         />

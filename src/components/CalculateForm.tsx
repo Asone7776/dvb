@@ -73,7 +73,7 @@ const CalculateForm = () => {
             return Number(prev) + Number(next);
         });
         const otherRisks = risks.filter(item => !allowed.includes(item!.code));
-        const variants = [...disabledValues!].splice(0, 3).map((variant, index) => {
+        const variants = [...disabledValues!].splice(0, 2).map((variant, index) => {
             if (variant) {
                 return index + 1;
             } else {

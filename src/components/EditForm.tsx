@@ -17,6 +17,7 @@ import { documentTypes } from '../constants';
 import moment from 'moment';
 import { parse } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
+const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const EditForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -24,7 +25,8 @@ const EditForm = () => {
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
     // console.log('safe', safe);
-    // console.log('edit data', editFormData);
+    // console.log('safe', editFormData);
+    // console.log('edit data', parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()));
 
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
@@ -34,29 +36,30 @@ const EditForm = () => {
     ]);
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
-            name: editFormData?.name,
-            inn: editFormData?.inn,
+            name: editFormData?.form.name,
+            inn: editFormData?.form.inn,
             kpp: editFormData?.kpp,
-            index: editFormData?.index,
-            ogrn: editFormData?.ogrn,
+            index: editFormData?.form.index,
+            ogrn: editFormData?.form.ogrn,
             email: editFormData?.email,
-            house: editFormData?.house,
-            flat: editFormData?.flat,
-            property_name: editFormData?.property_name,
-            position: editFormData?.position,
-            city: editFormData?.city,
-            object_area: editFormData?.object_area,
-            floor: editFormData?.floor,
-            number_of_floors: editFormData?.number_of_floors,
-            signer: editFormData?.signer,
-            phone: editFormData?.phone,
-            document_type: { value: 'Устав', label: 'Устав' },
+            house: editFormData?.form.house,
+            flat: editFormData?.form.flat,
+            property_name: editFormData?.form.property_name,
+            position: editFormData?.form.position,
+            city: editFormData?.form.city,
+            object_area: editFormData?.form.object_area,
+            floor: editFormData?.form.floor,
+            number_of_floors: editFormData?.form.number_of_floors,
+            signer: editFormData?.form.signer,
+            phone: editFormData?.form.phone,
+            document_type: { value: editFormData?.form.document_type, label: editFormData?.form.document_type },
             kladr: {
                 name: "г Москва",
                 value: "7700000000000"
             },
-            attorney: editFormData?.attorney,
-            attorney_date: editFormData?.attorney ? parse(editFormData?.attorney, "dd-MM-yyyy", new Date()) : null,
+            attorney: editFormData?.form.attorney,
+            attorney_date: editFormData?.form.attorney_date ? parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()) : null,
+            // attorney_date: editFormData?.form.attorney_date ? editFormData?.form.attorney_date : null,
             // premium: safe ? safe.premium : undefined
         }
     });
@@ -88,14 +91,36 @@ const EditForm = () => {
         };
         const objectToSend = {
             ...data,
+            id: editFormData && editFormData.id,
             street: data ? data.kladr.name : null,
-            kladr: data ? data.kladr.kladr_id : null,
-            legal_type: data ? data.legal_type.value : null,
-            document_type: data ? data.document_type.value : null,
+            kladr: editFormData ? editFormData.form && editFormData.form.kladr : null,
+            legal_type: editFormData ? editFormData.form && editFormData.form.legal_type : null,
+            document_type: data ? data.document_type && data.document_type.value : null,
             attorney_date: data ? moment(data.attorney_date).format('DD.MM.Y') : null,
             tariff: safe ? safe.orderNo : 0,
             risks
         };
+        if (safe && safe.orderNo === 0) {
+            const otherRisks = risks.filter(item => !allowed.includes(item!.code));
+            const arrayOfSum = risks.filter(item => allowed.includes(item!.code)).map(item => item!.sum).reduce((prev, next) => {
+                return Number(prev) + Number(next);
+            });
+            objectToSend.risks = [
+                {
+                    code: "BUSINESS_PROTECTION",
+                    sum: arrayOfSum
+                },
+                ...otherRisks
+            ];
+            const variants = safe.coverages.filter(item => allowed.includes(item.code)).map((variant, index) => {
+                if (variant) {
+                    return index + 1;
+                } else {
+                    return;
+                }
+            });
+            objectToSend.variants = variants;
+        }
         dispatch(updatePolicy(objectToSend));
     };
     return (
@@ -222,7 +247,7 @@ const EditForm = () => {
                                     })} />
                                     {errors.position && <span className="error-message">{errors.position.message}</span>}
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <h5>
                                         <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
                                         <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
@@ -242,7 +267,7 @@ const EditForm = () => {
                                         }}
                                     />
                                     {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
-                                </div>
+                                </div> */}
                                 {/* <div className="form-group">
                                     <h5>Город</h5>
                                     <input placeholder='Город' className='form-control' type="text" {...register('city', {
@@ -337,7 +362,7 @@ const EditForm = () => {
                         </div>
                     </div>
                     <div className="col-4">
-                        <InfoCardCreate submitTitle='Обновить полис' organization_name={prepareOrgName('', full_name[0] ? full_name[0] : '')} data={cardData} premium={safe?.premium} loading={police.loading} />
+                        <InfoCardCreate submitTitle='Обновить полис' organization_name={prepareOrgName('', full_name[0] ? full_name[0] : '')} data={cardData} premium={editFormData && editFormData.amount ? Number(editFormData.amount) : undefined} loading={police.loading} />
                     </div>
                 </div>
             </form >
