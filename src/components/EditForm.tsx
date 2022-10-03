@@ -24,8 +24,8 @@ const EditForm = () => {
     const police = useAppSelector(state => state.police.updatedPolicy);
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
-    // console.log('safe', safe);
-    // console.log('safe', editFormData);
+    console.log('safe', safe);
+    console.log('safe', police);
     // console.log('edit data', parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()));
 
     const [documentTypeOptions] = useState<selectOption[]>([

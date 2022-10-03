@@ -9,6 +9,7 @@ import { successNotify, failureNotify } from '../../notifications';
 import { axiosAuth } from '../../axios-instances';
 import { resetSavedPolicy } from '../../redux/slices/policeSlice';
 import { useNavigate } from 'react-router-dom';
+import { holdPolice } from '../../redux/slices/policeSlice';
 import Spinner from "../../components/Spinner";
 const CompletePolice: FC = () => {
     const police = useAppSelector(state => state.police.savedPolicy);
@@ -24,7 +25,6 @@ const CompletePolice: FC = () => {
             successNotify(response.data.data);
             setSendLoading(false);
             dispatch(resetSavedPolicy());
-            successNotify('Заключенный договор направлен на электронную почту клиента и менеджера Банка');
             navigate('/admin/new');
         } catch (error: any) {
             setSendLoading(false);
@@ -51,10 +51,11 @@ const CompletePolice: FC = () => {
         }
     }
     const editOrder = async () => {
+        dispatch(holdPolice(police.data?.order));
         navigate(`/admin/new/edit/${police.data?.order.id}`);
     }
     useEffect(() => {
-        if(!police.data || !safe){
+        if (!police.data || !safe) {
             navigate('/admin/new');
         }
     }, []);
@@ -90,7 +91,7 @@ const CompletePolice: FC = () => {
                                     <InfoItem subTitle='Объект страхования' info={police.data?.order.signer} />
                                 </div>
                                 <div className="col-6 mb-3">
-                                    <InfoItem subTitle='Квадратура' />
+                                    <InfoItem subTitle='Квадратура' info={police.data?.order.form.object_area} />
                                 </div>
                             </div>
                             <div className="divider"></div>
