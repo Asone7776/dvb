@@ -73,7 +73,7 @@ const CompletePolice: FC = () => {
                             <div className="row">
                                 {police.data?.order && police.data.order.options.map((item: any, index: number) => (
                                     <div className="col-6 mb-3">
-                                        <InfoItem title={RISKS_DESCRIPTIONS[item.code + '_DESC']} subTitle={'Сумма страхования'}
+                                        <InfoItem title={RISKS_DESCRIPTIONS[item.code]} subTitle={'Сумма страхования'}
                                             info={`${formatPrice(item.sum)} рублей`}
                                         />
                                     </div>
@@ -130,7 +130,7 @@ const CompletePolice: FC = () => {
                             </div>
                         </div>
                         <div className="col-4">
-                            <CompleteCard data={police.data?.order.options} price={safe?.premium} />
+                            <CompleteCard data={police.data?.order.options} price={police.data?.order.amount} />
                         </div>
                     </div>
                 </div>

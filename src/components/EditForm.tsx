@@ -17,6 +17,7 @@ import { documentTypes } from '../constants';
 import moment from 'moment';
 import { parse } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
+import QuestionIcon from './icons/QuestionIcon';
 const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const EditForm = () => {
     const dispatch = useAppDispatch();
@@ -24,9 +25,8 @@ const EditForm = () => {
     const police = useAppSelector(state => state.police.updatedPolicy);
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
-    console.log('safe', safe);
-    console.log('safe', police);
-    // console.log('edit data', parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()));
+    // console.log('safe', safe);
+    // console.log('safe', police);
 
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
@@ -134,11 +134,12 @@ const EditForm = () => {
                                     <h4>Страхователь</h4>
                                 </div>
                                 <div className="form-group">
-                                    <input className='form-control' type="text" placeholder='Наименование организации' {...register('name', {
+                                    <input className='form-control' type="text" placeholder='Название страхователя' {...register('name', {
                                         required: requiredPattern
                                     })} />
                                     {errors.name && <span className="error-message">{errors.name.message}</span>}
                                 </div>
+                                <h4>Реквизиты</h4>
                                 <div className="form-group">
                                     <h5>ИНН</h5>
                                     <input className='form-control' type="text" placeholder='ИНН' {...register('inn', {
@@ -170,13 +171,6 @@ const EditForm = () => {
                                     {errors.kpp && <span className="error-message">{errors.kpp.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Индекс</h5>
-                                    <input placeholder='Индекс' className='form-control' type="text" {...register('index', {
-                                        required: requiredPattern
-                                    })} />
-                                    {errors.index && <span className="error-message">{errors.index.message}</span>}
-                                </div>
-                                <div className="form-group">
                                     <h5>ОГРН</h5>
                                     <input placeholder='ОГРН' className='form-control' type="text" {...register('ogrn', {
                                         required: requiredPattern,
@@ -191,6 +185,7 @@ const EditForm = () => {
                                     })} />
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
                                 </div>
+                                <h4>Контакты</h4>
                                 <div className="form-group">
                                     <h5>E-mail клиента</h5>
                                     <input placeholder='E-mail клиента' className='form-control' type="email" {...register('email', {
@@ -199,82 +194,35 @@ const EditForm = () => {
                                     })} />
                                     {errors.email && <span className="error-message">{errors.email.message}</span>}
                                 </div>
-
                                 <div className="form-group">
-                                    <h5>Корпус</h5>
-                                    <input placeholder='Корпус' className='form-control' type="text" {...register('building', {
-                                        required: false
-                                    })} />
-                                    {errors.building && <span className="error-message">{errors.building.message}</span>}
+                                    <h5>Телефон клиента</h5>
+                                    <Controller
+                                        control={control}
+                                        name="phone"
+                                        render={({ field: { onChange, name, value } }) => (
+                                            <NumberFormat
+                                                name={'phone'}
+                                                value={value}
+                                                onChange={onChange} className={'form-control'} format="+7(###)###-##-##" allowEmptyFormatting mask="_" />
+                                        )}
+                                    />
+                                    {errors.phone && <span className="error-message">{errors.phone.message}</span>}
                                 </div>
+                                <h4>Подписант</h4>
                                 <div className="form-group">
-                                    <h5>Дом</h5>
-                                    <input placeholder='Дом' className='form-control' type="text" {...register('house', {
-                                        required: false
-                                    })} />
-                                    {errors.house && <span className="error-message">{errors.house.message}</span>}
-                                </div>
-                                <div className="form-group">
-                                    <h5>Номер офиса</h5>
-                                    <input placeholder='Номер офиса' className='form-control' type="text" {...register('flat', {
-                                        required: false
-                                    })} />
-                                    {errors.flat && <span className="error-message">{errors.flat.message}</span>}
-                                </div>
-                                <div className="form-group">
-                                    <h5>
-                                        <a data-tip data-for="build-name-tooltip">Название недвижимости</a>
-                                        <ReactTooltip id='build-name-tooltip' place="top" type="dark" effect="float" >
-                                            («Офис, магазин, салон красоты, детский сад»)
-                                        </ReactTooltip>
-                                    </h5>
-                                    <input className='form-control' type="text" placeholder='Название недвижимости' {...register('property_name', {
-                                        required: requiredPattern
-                                    })} />
-                                    {errors.property_name && <span className="error-message">{errors.property_name.message}</span>}
-                                </div>
-                                <div className="form-group">
-                                    <h5>Подписант</h5>
+                                    <h5>Подписант ФИО</h5>
                                     <input placeholder='Подписант' className='form-control' type="text" {...register('signer', {
                                         required: requiredPattern
                                     })} />
                                     {errors.signer && <span className="error-message">{errors.signer.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Должность</h5>
+                                    <h5>Подписант должность</h5>
                                     <input placeholder='Должность' className='form-control' type="text" {...register('position', {
                                         required: requiredPattern
                                     })} />
                                     {errors.position && <span className="error-message">{errors.position.message}</span>}
                                 </div>
-                                {/* <div className="form-group">
-                                    <h5>
-                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
-                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
-                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
-                                        </ReactTooltip>
-                                    </h5>
-                                    <Controller
-                                        name="kladr"
-                                        control={control}
-                                        rules={{ required: requiredPattern }}
-                                        render={({ field }) => {
-                                            return (
-                                                <SearchableSelect
-                                                    {...field}
-                                                />
-                                            );
-                                        }}
-                                    />
-                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
-                                </div> */}
-                                {/* <div className="form-group">
-                                    <h5>Город</h5>
-                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
-                                        required: requiredPattern
-                                    })} />
-                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
-                                </div> */}
                                 <div className="form-group">
                                     <h5>Действует на основании</h5>
                                     <Controller
@@ -324,25 +272,46 @@ const EditForm = () => {
                                 )
                                     : null}
                                 <div className="form-group">
-                                    <h5>Телефон клиента</h5>
-                                    <Controller
-                                        control={control}
-                                        name="phone"
-                                        render={({ field: { onChange, name, value } }) => (
-                                            <NumberFormat
-                                                name={'phone'}
-                                                value={value}
-                                                onChange={onChange} className={'form-control'} format="+7(###)###-##-##" allowEmptyFormatting mask="_" />
-                                        )}
-                                    />
-                                    {errors.phone && <span className="error-message">{errors.phone.message}</span>}
-                                </div>
-                                <div className="form-group">
-                                    <h5>Квадратура</h5>
-                                    <input placeholder='Квадратура' className='form-control' type="text" {...register('object_area', {
+                                    <h5>
+                                        Название недвижимости
+                                        <a data-tip data-for="build-name-tooltip" style={{ marginLeft: 10 }}><QuestionIcon /></a>
+                                        <ReactTooltip id='build-name-tooltip' place="top" type="dark" effect="float" >
+                                            («Офис, магазин, салон красоты, детский сад»)
+                                        </ReactTooltip>
+                                    </h5>
+                                    <input className='form-control' type="text" placeholder='Название недвижимости' {...register('property_name', {
                                         required: requiredPattern
                                     })} />
-                                    {errors.object_area && <span className="error-message">{errors.object_area.message}</span>}
+                                    {errors.property_name && <span className="error-message">{errors.property_name.message}</span>}
+                                </div>
+                                <h4>Адрес объекта страхования</h4>
+                                <div className="form-group">
+                                    <h5>Индекс</h5>
+                                    <input placeholder='Индекс' className='form-control' type="text" {...register('index', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.index && <span className="error-message">{errors.index.message}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <h5>Дом</h5>
+                                    <input placeholder='Дом' className='form-control' type="text" {...register('house', {
+                                        required: false
+                                    })} />
+                                    {errors.house && <span className="error-message">{errors.house.message}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <h5>Корпус</h5>
+                                    <input placeholder='Корпус' className='form-control' type="text" {...register('building', {
+                                        required: false
+                                    })} />
+                                    {errors.building && <span className="error-message">{errors.building.message}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <h5>Номер офиса</h5>
+                                    <input placeholder='Номер офиса' className='form-control' type="text" {...register('flat', {
+                                        required: false
+                                    })} />
+                                    {errors.flat && <span className="error-message">{errors.flat.message}</span>}
                                 </div>
                                 <div className="form-group">
                                     <h5>Этаж</h5>
@@ -352,11 +321,46 @@ const EditForm = () => {
                                     {errors.floor && <span className="error-message">{errors.floor.message}</span>}
                                 </div>
                                 <div className="form-group">
-                                    <h5>Количество этажей</h5>
+                                    <h5>Количество этажей в здании</h5>
                                     <input placeholder='Количество этажей' className='form-control' type="number" {...register('number_of_floors', {
                                         required: requiredPattern
                                     })} />
                                     {errors.number_of_floors && <span className="error-message">{errors.number_of_floors.message}</span>}
+                                </div>
+                                {/* <div className="form-group">
+                                    <h5>
+                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
+                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
+                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
+                                        </ReactTooltip>
+                                    </h5>
+                                    <Controller
+                                        name="kladr"
+                                        control={control}
+                                        rules={{ required: requiredPattern }}
+                                        render={({ field }) => {
+                                            return (
+                                                <SearchableSelect
+                                                    {...field}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
+                                </div> */}
+                                {/* <div className="form-group">
+                                    <h5>Город</h5>
+                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
+                                </div> */}
+                                <div className="form-group">
+                                    <h5>Площадь объекта страхования, кв. м.</h5>
+                                    <input placeholder='Площадь объекта страхования, кв. м.' className='form-control' type="text" {...register('object_area', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.object_area && <span className="error-message">{errors.object_area.message}</span>}
                                 </div>
                             </div>
                         </div>

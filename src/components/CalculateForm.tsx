@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { useForm } from "react-hook-form";
 import CoveragesCard from './CoveragesCard';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -6,12 +6,16 @@ import { calculatePolicy } from '../redux/actions/policeActions';
 import InputRange from './InputRange';
 import { resetCalculatedPolicy } from '../redux/slices/policeSlice';
 import { saveItem } from '../redux/slices/safeSlice';
+import { tariffs } from '../constants';
+import { useNavigate } from 'react-router-dom';
 const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const CalculateForm = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const safe = useAppSelector(state => state.safe.data);
     const police = useAppSelector(state => state.police.calculatedPolicy);
     const coverages = safe?.coverages;
+    const [risksForCreate, setRisksForCreate] = useState<any[]>([]);
     const codes = coverages?.map((item) => item.code);
     const [disabledValues, setDisabledValues] = useState(coverages?.map((item, index) => {
         if (index === 0) {
@@ -69,6 +73,7 @@ const CalculateForm = () => {
             }
             return;
         }).filter(item => item != null);
+        setRisksForCreate(risks);
         const arrayOfSum = risks.filter(item => allowed.includes(item!.code)).map(item => item!.sum).reduce((prev, next) => {
             return Number(prev) + Number(next);
         });
@@ -91,8 +96,24 @@ const CalculateForm = () => {
             ],
             variants
         };
+
         dispatch(calculatePolicy(objectToSend));
     };
+    const goToForm = (event: FormEvent) => {
+        event.preventDefault();
+        const tariffToSafe = {
+            ...tariffs[0],
+            coverages: tariffs[0].coverages.map(item => {
+                const findedItem = risksForCreate.find(risk => risk.code === item.code);
+                return {
+                    ...item,
+                    sum: findedItem ? findedItem.sum : null
+                }
+            }).filter(item => item.sum)
+        }
+        dispatch(saveItem(tariffToSafe));
+        navigate('/admin/new/create');
+    }
     return (
         <div className="calculate-form create-form">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,7 +213,7 @@ const CalculateForm = () => {
                         ))}
                     </div>
                     <div className="col-4">
-                        <CoveragesCard price={police.data} data={allFields} loading={police.loading} disabledValues={disabledValues ? disabledValues : null} />
+                        <CoveragesCard price={police.data} data={allFields} loading={police.loading} disabledValues={disabledValues ? disabledValues : null} onProceed={goToForm} />
                     </div>
                 </div >
             </form >

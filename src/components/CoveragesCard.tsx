@@ -1,20 +1,22 @@
-import { FC } from "react";
+import { FC, FormEvent } from "react";
 import cn from "classnames";
 import { formatPrice } from "../functions";
 import Spinner from "./Spinner";
 import { Link } from 'react-router-dom';
 import { RISKS_DESCRIPTIONS } from '../risk-constants';
+
 interface CoveragesCardProps {
     loading: boolean
     data: any[] | null
     organization_name?: string
     disabledValues: boolean[] | null
     price: number | null
+    onProceed: (event: FormEvent) => void
 }
 
-const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, price }) => {
+const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, price, onProceed }) => {
     let customData = data ? Object.entries(data) : [];
-    // console.log(customData);
+
     return (
         <div className='card custom-card-small'>
             <div className={'info-wrapper'}>
@@ -41,11 +43,9 @@ const CoveragesCard: FC<CoveragesCardProps> = ({ loading, data, disabledValues, 
                         ) : 'Рассчитать'}
                     </button>
                     {price ? (
-                        <Link to={'/admin/new/create'} >
-                            <button className="btn btn-primary mb-3">
-                                Оформить
-                            </button>
-                        </Link>
+                        <button onClick={onProceed} className="btn btn-primary mb-3 ml-0">
+                            Оформить
+                        </button>
                     ) : null}
                     <Link to={'/admin/new'}>
                         <button className="btn btn-primary-transparent ml-0">
