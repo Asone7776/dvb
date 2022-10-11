@@ -29,11 +29,11 @@ const InfoCardCreate: FC<InfoCardCreateProps> = ({ organization_name, loading, d
                         <div className="divider"></div>
                     </>
                 ) : null}
-                {data && data[1] ? (
+                {data ? (
                     <>
                         <div className="info-block">
                             <span>Объект страхования</span>
-                            <h4>{data[1].name}</h4>
+                            <h4>{`${data[2] ? data[2] : ''} ${data[3] ? data[3] : ''} ${data[4] ? data[4] : ''} ${data[5] ? data[5] : ''} ${data[6] ? data[6] : ''}`}</h4>
                         </div>
                         <div className="divider"></div>
                     </>

@@ -25,7 +25,6 @@ const CreateForm = () => {
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
     const safe = useAppSelector(state => state.safe.data);
-    console.log(safe);
     // console.log(police);
     // console.log(safe);
     const [companyOptions] = useState<selectOption[]>([
@@ -79,7 +78,7 @@ const CreateForm = () => {
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr']);
+    const cardData = watch(['signer', 'kladr', 'index', 'street', 'house', 'building', 'flat']);
     const currentType = prefix && prefix[0] && prefix[0].value;
 
     const onSubmit = (data: any) => {
@@ -166,8 +165,8 @@ const CreateForm = () => {
                                     <h5>ИНН</h5>
                                     <input className='form-control' type="text" placeholder='ИНН' {...register('inn', {
                                         required: requiredPattern,
-                                        minLength: currentType === "IP" ? minPattern(10) : minPattern(12),
-                                        maxLength: currentType === "IP" ? maxPattern(10) : maxPattern(12),
+                                        minLength: minPattern(10),
+                                        maxLength: maxPattern(12),
                                     })} />
                                     {errors.inn && <span className="error-message">{errors.inn.message}</span>}
                                 </div>
@@ -335,6 +334,13 @@ const CreateForm = () => {
                                     {errors.index && <span className="error-message">{errors.index.message}</span>}
                                 </div>
                                 <div className="form-group">
+                                    <h5>Улица</h5>
+                                    <input placeholder='Улица' className='form-control' type="text" {...register('street', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.street && <span className="error-message">{errors.street.message}</span>}
+                                </div>
+                                <div className="form-group">
                                     <h5>Дом</h5>
                                     <input placeholder='Дом' className='form-control' type="text" {...register('house', {
                                         required: false
@@ -369,13 +375,6 @@ const CreateForm = () => {
                                     })} />
                                     {errors.number_of_floors && <span className="error-message">{errors.number_of_floors.message}</span>}
                                 </div>
-                                {/* <div className="form-group">
-                                    <h5>Город</h5>
-                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
-                                        required: requiredPattern
-                                    })} />
-                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
-                                </div> */}
                                 <div className="form-group">
                                     <h5>Площадь объекта страхования, кв. м.</h5>
                                     <input placeholder='Площадь объекта страхования, кв. м.' className='form-control' type="text" {...register('object_area', {

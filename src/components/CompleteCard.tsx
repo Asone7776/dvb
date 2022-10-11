@@ -14,7 +14,7 @@ const CompleteCard: FC<CompleteCardCreateProps> = ({ data, price }) => {
             <div className={'info-wrapper'}>
                 {data && data.map(item => (
                     <>
-                        <InfoItem title={RISKS_DESCRIPTIONS[item.code + '_DESC']} subTitle={'Страховая премия'}
+                        <InfoItem title={RISKS_DESCRIPTIONS[item.code]} subTitle={'Страховая премия'}
                             info={`${formatPrice(item.sum)} рублей`}
                         />
                         <div className="divider"></div>

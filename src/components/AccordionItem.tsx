@@ -87,7 +87,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             />
                         </div>
                         <div className="col-3">
-                            <InfoItem subTitle={'Квадратура'}
+                            <InfoItem subTitle={'Площадь объекта страхования, кв. м.'}
                                 info={item.form && item.form.object_area && item.form.object_area}
                             />
                         </div>
@@ -96,7 +96,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row">
                         <div className="col-3">
                             <InfoItem subTitle={'Контактное лицо'}
-                                info={item.manager}
+                                info={item.signer}
                             />
                         </div>
                         <div className="col-3">

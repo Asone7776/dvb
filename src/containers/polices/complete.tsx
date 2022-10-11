@@ -88,10 +88,10 @@ const CompletePolice: FC = () => {
                                     <InfoItem subTitle='Юридический адрес' info={police.data?.order.address} />
                                 </div>
                                 <div className="col-6 mb-3">
-                                    <InfoItem subTitle='Объект страхования' info={police.data?.order.signer} />
+                                    <InfoItem subTitle='Подписант' info={police.data?.order.signer} />
                                 </div>
                                 <div className="col-6 mb-3">
-                                    <InfoItem subTitle='Квадратура' info={police.data?.order.form.object_area} />
+                                    <InfoItem subTitle='Площадь объекта страхования, кв. м.' info={police.data?.order.form.object_area} />
                                 </div>
                             </div>
                             <div className="divider"></div>

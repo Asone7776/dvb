@@ -26,7 +26,7 @@ const EditForm = () => {
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
     // console.log('safe', safe);
-    // console.log('safe', police);
+    // console.log('safe', editFormData);
 
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
@@ -47,6 +47,7 @@ const EditForm = () => {
             property_name: editFormData?.form.property_name,
             position: editFormData?.form.position,
             city: editFormData?.form.city,
+            street: editFormData?.form.street,
             object_area: editFormData?.form.object_area,
             floor: editFormData?.form.floor,
             number_of_floors: editFormData?.form.number_of_floors,
@@ -54,8 +55,8 @@ const EditForm = () => {
             phone: editFormData?.form.phone,
             document_type: { value: editFormData?.form.document_type, label: editFormData?.form.document_type },
             kladr: {
-                name: "г Москва",
-                value: "7700000000000"
+                name: editFormData?.form.street,
+                value: editFormData?.form.phone,
             },
             attorney: editFormData?.form.attorney,
             attorney_date: editFormData?.form.attorney_date ? parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()) : null,
@@ -77,7 +78,7 @@ const EditForm = () => {
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr']);
+    const cardData = watch(['signer', 'kladr', 'index', 'street', 'house', 'building', 'flat']);
 
     const onSubmit = (data: any) => {
         let risks: any[] = [];
@@ -149,8 +150,8 @@ const EditForm = () => {
                                             message: 'Минимальная длина 10'
                                         },
                                         maxLength: {
-                                            value: 10,
-                                            message: 'Максимальная длина 10'
+                                            value: 12,
+                                            message: 'Максимальная длина 12'
                                         }
                                     })} />
                                     {errors.inn && <span className="error-message">{errors.inn.message}</span>}
@@ -184,6 +185,27 @@ const EditForm = () => {
                                         }
                                     })} />
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <h5>
+                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
+                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
+                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
+                                        </ReactTooltip>
+                                    </h5>
+                                    <Controller
+                                        name="kladr"
+                                        control={control}
+                                        rules={{ required: requiredPattern }}
+                                        render={({ field }) => {
+                                            return (
+                                                <SearchableSelect
+                                                    {...field}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
                                 </div>
                                 <h4>Контакты</h4>
                                 <div className="form-group">
@@ -293,6 +315,13 @@ const EditForm = () => {
                                     {errors.index && <span className="error-message">{errors.index.message}</span>}
                                 </div>
                                 <div className="form-group">
+                                    <h5>Улица</h5>
+                                    <input placeholder='Улица' className='form-control' type="text" {...register('street', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.street && <span className="error-message">{errors.street.message}</span>}
+                                </div>
+                                <div className="form-group">
                                     <h5>Дом</h5>
                                     <input placeholder='Дом' className='form-control' type="text" {...register('house', {
                                         required: false
@@ -327,27 +356,6 @@ const EditForm = () => {
                                     })} />
                                     {errors.number_of_floors && <span className="error-message">{errors.number_of_floors.message}</span>}
                                 </div>
-                                {/* <div className="form-group">
-                                    <h5>
-                                        <a data-tip data-for="jur-address-tooltip">Юридический адрес</a>
-                                        <ReactTooltip id='jur-address-tooltip' place="top" type="dark" effect="float" >
-                                            Включает название населённого пункта (это может быть город, область поселок и т.д.)
-                                        </ReactTooltip>
-                                    </h5>
-                                    <Controller
-                                        name="kladr"
-                                        control={control}
-                                        rules={{ required: requiredPattern }}
-                                        render={({ field }) => {
-                                            return (
-                                                <SearchableSelect
-                                                    {...field}
-                                                />
-                                            );
-                                        }}
-                                    />
-                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
-                                </div> */}
                                 {/* <div className="form-group">
                                     <h5>Город</h5>
                                     <input placeholder='Город' className='form-control' type="text" {...register('city', {
