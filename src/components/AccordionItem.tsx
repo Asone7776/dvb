@@ -126,8 +126,11 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row align-items-end">
                         <div className="col-9">
                             <div className="item">
+                                <div className="info-item">
+                                    <span>Статус оплаты</span>
+                                </div>
                                 <div className="d-flex">
-                                    {/* <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
+                                    <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
                                         onStatusChange(3);
                                     }}>
                                         Оплачен
@@ -136,7 +139,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                                         onStatusChange(0);
                                     }}>
                                         Не оплачен
-                                    </div> */}
+                                    </div>
                                     <div className={cn('btn', { 'btn btn-blue': item.status === -1, 'btn-gray': item.status !== -1 })} onClick={() => {
                                         onStatusChange(-1);
                                     }}>

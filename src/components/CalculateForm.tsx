@@ -26,7 +26,7 @@ const CalculateForm = () => {
     const defaultValues: any = {};
     coverages?.forEach((item) => {
         // defaultValues[item.code] = item.sum;
-        defaultValues[item.code] = 0;
+        defaultValues[item.code] = 1;
     });
 
     const { getValues, setValue, watch, register, handleSubmit } = useForm<any>({

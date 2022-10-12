@@ -109,10 +109,6 @@ export const tariffs: SafeProgram[] = [
                 includes: true
             },
             {
-                name: 'Пожар',
-                includes: true
-            },
-            {
                 name: 'Падение летательных аппаратов',
                 includes: true
             },
@@ -173,10 +169,6 @@ export const tariffs: SafeProgram[] = [
             },
             {
                 name: 'Взрыв',
-                includes: true
-            },
-            {
-                name: 'Пожар',
                 includes: true
             },
             {
@@ -247,10 +239,6 @@ export const tariffs: SafeProgram[] = [
             },
             {
                 name: 'Взрыв',
-                includes: true
-            },
-            {
-                name: 'Пожар',
                 includes: true
             },
             {
