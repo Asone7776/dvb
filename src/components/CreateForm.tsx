@@ -78,7 +78,7 @@ const CreateForm = () => {
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr', 'index', 'street', 'house', 'building', 'flat']);
+    const cardData = watch(['signer', 'kladr', 'index', 'city', 'street', 'house', 'building', 'flat']);
     const currentType = prefix && prefix[0] && prefix[0].value;
 
     const onSubmit = (data: any) => {
@@ -332,6 +332,13 @@ const CreateForm = () => {
                                         required: requiredPattern
                                     })} />
                                     {errors.index && <span className="error-message">{errors.index.message}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <h5>Город</h5>
+                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
                                 </div>
                                 <div className="form-group">
                                     <h5>Улица</h5>

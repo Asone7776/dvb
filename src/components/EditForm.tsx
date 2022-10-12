@@ -78,7 +78,7 @@ const EditForm = () => {
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr', 'index', 'street', 'house', 'building', 'flat']);
+    const cardData = watch(['signer', 'kladr', 'index', 'city', 'street', 'house', 'building', 'flat']);
 
     const onSubmit = (data: any) => {
         let risks: any[] = [];
@@ -315,6 +315,13 @@ const EditForm = () => {
                                     {errors.index && <span className="error-message">{errors.index.message}</span>}
                                 </div>
                                 <div className="form-group">
+                                    <h5>Город</h5>
+                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
+                                        required: requiredPattern
+                                    })} />
+                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
+                                </div>
+                                <div className="form-group">
                                     <h5>Улица</h5>
                                     <input placeholder='Улица' className='form-control' type="text" {...register('street', {
                                         required: requiredPattern
@@ -356,13 +363,6 @@ const EditForm = () => {
                                     })} />
                                     {errors.number_of_floors && <span className="error-message">{errors.number_of_floors.message}</span>}
                                 </div>
-                                {/* <div className="form-group">
-                                    <h5>Город</h5>
-                                    <input placeholder='Город' className='form-control' type="text" {...register('city', {
-                                        required: requiredPattern
-                                    })} />
-                                    {errors.city && <span className="error-message">{errors.city.message}</span>}
-                                </div> */}
                                 <div className="form-group">
                                     <h5>Площадь объекта страхования, кв. м.</h5>
                                     <input placeholder='Площадь объекта страхования, кв. м.' className='form-control' type="text" {...register('object_area', {
