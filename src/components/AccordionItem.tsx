@@ -33,7 +33,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             {item.policy_number}
                         </div>
                         <div className="col text-center tariff-type">
-                            {item.form && item.form.tariff && item.form.tariff === 1 ? ('Залог') : 'Пакет'}
+                            {item.form && item.form.tariff === 0 ? 'Залог' : 'Пакет'}
                         </div>
                         <div className="col col-2 risk text-center">
                             {item.manager}

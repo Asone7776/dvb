@@ -74,10 +74,14 @@ export const policeSlice = createSlice({
             state.updatedPolicy.error = null;
             state.updatedPolicy.success = false;
         })
-        builder.addCase(updatePolicy.fulfilled, (state) => {
+        builder.addCase(updatePolicy.fulfilled, (state, action) => {
             state.updatedPolicy.loading = false;
             state.updatedPolicy.success = true;
             state.updatedPolicy.error = null;
+            state.savedPolicy.loading = false;
+            state.savedPolicy.data = action.payload;
+            state.savedPolicy.error = null;
+            state.savedPolicy.success = true;
         })
         builder.addCase(updatePolicy.rejected, (state, action) => {
             state.updatedPolicy.loading = false;

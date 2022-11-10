@@ -55,6 +55,7 @@ export interface createFormData {
     object_area: number
     floor: number
     number_of_floors: number
+    legal_address: selectOption | null
 }
 
 export interface risk {

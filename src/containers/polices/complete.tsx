@@ -7,7 +7,7 @@ import CompleteCard from '../../components/CompleteCard';
 import InfoItem from '../../components/InfoItem';
 import { successNotify, failureNotify } from '../../notifications';
 import { axiosAuth } from '../../axios-instances';
-import { resetSavedPolicy } from '../../redux/slices/policeSlice';
+import { resetSavedPolicy, resetUpdatePolicy } from '../../redux/slices/policeSlice';
 import { useNavigate } from 'react-router-dom';
 import { holdPolice } from '../../redux/slices/policeSlice';
 import Spinner from "../../components/Spinner";
@@ -57,6 +57,10 @@ const CompletePolice: FC = () => {
     useEffect(() => {
         if (!police.data || !safe) {
             navigate('/admin/new');
+        }
+        return () => {
+            dispatch(resetSavedPolicy());
+            dispatch(resetUpdatePolicy());
         }
     }, []);
     return (

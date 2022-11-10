@@ -18,6 +18,7 @@ import moment from 'moment';
 import { parse } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
 import QuestionIcon from './icons/QuestionIcon';
+import { format } from 'path';
 const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const EditForm = () => {
     const dispatch = useAppDispatch();
@@ -25,16 +26,16 @@ const EditForm = () => {
     const police = useAppSelector(state => state.police.updatedPolicy);
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
-    // console.log('safe', safe);
+    console.log('safe', safe);
     // console.log('safe', editFormData);
-
+    console.log('updated too', police);
     const [documentTypeOptions] = useState<selectOption[]>([
         { value: 'Устав', label: 'Устав' },
         { value: 'Доверенность', label: 'Доверенность' },
         { value: 'Свидетельство о государственной регистрации ФЛ в качестве ИП', label: 'ИП' },
         { value: 'Лист записи ЕГРИП', label: 'Лист записи ЕГРИП' }
     ]);
-    const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
+    const { getValues, control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
             name: editFormData?.form.name,
             inn: editFormData?.form.inn,
@@ -53,11 +54,13 @@ const EditForm = () => {
             number_of_floors: editFormData?.form.number_of_floors,
             signer: editFormData?.form.signer,
             phone: editFormData?.form.phone,
+            building: editFormData?.form.building,
             document_type: { value: editFormData?.form.document_type, label: editFormData?.form.document_type },
-            kladr: {
-                name: editFormData?.form.street,
-                value: editFormData?.form.phone,
+            legal_address: {
+                name: editFormData?.form.legal_address,
+                value: editFormData?.form.kladr,
             },
+            legal_type: editFormData?.form.legal_type,
             attorney: editFormData?.form.attorney,
             attorney_date: editFormData?.form.attorney_date ? parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()) : null,
             // attorney_date: editFormData?.form.attorney_date ? editFormData?.form.attorney_date : null,
@@ -72,14 +75,14 @@ const EditForm = () => {
     useEffect(() => {
         if (police.success) {
             dispatch(resetUpdatePolicy());
-            navigate('/admin/new/');
+            navigate('/admin/new/complete');
         }
     }, [police]);
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr', 'index', 'city', 'street', 'house', 'building', 'flat']);
-
+    const cardData = watch(['signer', 'legal_address', 'index', 'city', 'street', 'house', 'building', 'flat']);
+    const currentLegalType = getValues('legal_type') as unknown;
     const onSubmit = (data: any) => {
         let risks: any[] = [];
         if (safe?.coverages) {
@@ -93,8 +96,8 @@ const EditForm = () => {
         const objectToSend = {
             ...data,
             id: editFormData && editFormData.id,
-            street: data ? data.kladr.name : null,
-            kladr: editFormData ? editFormData.form && editFormData.form.kladr : null,
+            legal_address: data ? data.legal_address.name : null,
+            kladr: data ? data.legal_address.kladr_id : null,
             legal_type: editFormData ? editFormData.form && editFormData.form.legal_type : null,
             document_type: data ? data.document_type && data.document_type.value : null,
             attorney_date: data ? moment(data.attorney_date).format('DD.MM.Y') : null,
@@ -128,6 +131,7 @@ const EditForm = () => {
         <div className="pre-form create-form">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
+
                     <div className="col-8 small-gutters">
                         <div className="card custom-card">
                             <div className="card-body">
@@ -159,7 +163,7 @@ const EditForm = () => {
                                 <div className="form-group">
                                     <h5>КПП</h5>
                                     <input placeholder='КПП' className='form-control' type="text" {...register('kpp', {
-                                        required: requiredPattern,
+                                        required: currentLegalType === 'IP' ? false : requiredPattern,
                                         minLength: {
                                             value: 9,
                                             message: 'Минимальная длина 9'
@@ -180,8 +184,8 @@ const EditForm = () => {
                                             message: 'Минимальная длина 13'
                                         },
                                         maxLength: {
-                                            value: 13,
-                                            message: 'Максимальная длина 13'
+                                            value: 15,
+                                            message: 'Максимальная длина 15'
                                         }
                                     })} />
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
@@ -194,7 +198,7 @@ const EditForm = () => {
                                         </ReactTooltip>
                                     </h5>
                                     <Controller
-                                        name="kladr"
+                                        name="legal_address"
                                         control={control}
                                         rules={{ required: requiredPattern }}
                                         render={({ field }) => {
@@ -205,7 +209,7 @@ const EditForm = () => {
                                             );
                                         }}
                                     />
-                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
+                                    {errors.legal_address && <span className="error-message">{errors.legal_address.message}</span>}
                                 </div>
                                 <h4>Контакты</h4>
                                 <div className="form-group">
@@ -241,7 +245,7 @@ const EditForm = () => {
                                 <div className="form-group">
                                     <h5>Подписант должность</h5>
                                     <input placeholder='Должность' className='form-control' type="text" {...register('position', {
-                                        required: requiredPattern
+                                        required: currentLegalType === 'IP' ? requiredPattern : false
                                     })} />
                                     {errors.position && <span className="error-message">{errors.position.message}</span>}
                                 </div>

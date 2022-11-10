@@ -27,6 +27,7 @@ const CreateForm = () => {
     const safe = useAppSelector(state => state.safe.data);
     // console.log(police);
     // console.log(safe);
+    console.log('updated',police);
     const [companyOptions] = useState<selectOption[]>([
         { value: 'OOO', label: 'OOO' },
         { value: 'PAO', label: 'ПАО' },
@@ -61,7 +62,7 @@ const CreateForm = () => {
             // phone: "+7(999)999-99-99",
             legal_type: { value: 'OOO', label: 'OOO' },
             document_type: { value: 'Устав', label: 'Устав' },
-            kladr: null
+            legal_address: null
         }
     });
     useEffect(() => {
@@ -78,7 +79,7 @@ const CreateForm = () => {
     const prefix = watch(['legal_type']);
     const documentType = watch(['document_type']);
     const full_name = watch(['name']);
-    const cardData = watch(['signer', 'kladr', 'index', 'city', 'street', 'house', 'building', 'flat']);
+    const cardData = watch(['signer', 'legal_address', 'index', 'city', 'street', 'house', 'building', 'flat']);
     const currentType = prefix && prefix[0] && prefix[0].value;
 
     const onSubmit = (data: any) => {
@@ -94,8 +95,8 @@ const CreateForm = () => {
         };
         const objectToSend = {
             ...data,
-            street: data ? data.kladr.name : null,
-            kladr: data ? data.kladr.kladr_id : null,
+            legal_address: data ? data.legal_address.name : null,
+            kladr: data ? data.legal_address.kladr_id : null,
             legal_type: data ? data.legal_type.value : null,
             document_type: data ? data.document_type.value : null,
             attorney_date: data ? moment(data.attorney_date).format('DD.MM.Y') : null,
@@ -194,8 +195,8 @@ const CreateForm = () => {
                                             message: 'Минимальная длина 13'
                                         },
                                         maxLength: {
-                                            value: 13,
-                                            message: 'Максимальная длина 13'
+                                            value: 15,
+                                            message: 'Максимальная длина 15'
                                         }
                                     })} />
                                     {errors.ogrn && <span className="error-message">{errors.ogrn.message}</span>}
@@ -211,7 +212,7 @@ const CreateForm = () => {
                                         </ReactTooltip>
                                     </h5>
                                     <Controller
-                                        name="kladr"
+                                        name="legal_address"
                                         control={control}
                                         rules={{ required: requiredPattern }}
                                         render={({ field }) => {
@@ -222,7 +223,7 @@ const CreateForm = () => {
                                             );
                                         }}
                                     />
-                                    {errors.kladr && <span className="error-message">{errors.kladr.message}</span>}
+                                    {errors.legal_address && <span className="error-message">{errors.legal_address.message}</span>}
                                 </div>
                                 <h4>Контакты</h4>
                                 <div className="form-group">
