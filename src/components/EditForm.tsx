@@ -17,8 +17,7 @@ import { documentTypes } from '../constants';
 import moment from 'moment';
 import { parse } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
-import QuestionIcon from './icons/QuestionIcon';
-import { format } from 'path';
+import QuestionIcon from './icons/QuestionIcon';;
 const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
 const EditForm = () => {
     const dispatch = useAppDispatch();
