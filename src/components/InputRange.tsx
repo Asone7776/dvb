@@ -52,7 +52,7 @@ interface InputRangeProps {
     needToFormat: boolean
     min: number
     max: number
-    onChangeValue: (value: number) => void
+    onChangeValue: (value: number|null) => void
     defaultValue: number
     step: string
     disabled: boolean
@@ -68,7 +68,7 @@ const InputRange: FC<InputRangeProps> = ({ withInput = false, onChangeValue, suf
         onChangeValue(Number(value));
     }
 
-    const handleChangeInput = (value: number) => {
+    const handleChangeInput = (value: number|null) => {
         onChangeValue(value);
     }
 

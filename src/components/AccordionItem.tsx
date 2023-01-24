@@ -125,36 +125,36 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     </div>
                     <div className="row align-items-end">
                         <div className="col-9">
-                            {item.invoice_url ? (
-                                <div className="item">
-                                    <div className="info-item">
-                                        <span>Статус оплаты</span>
+                            <div className="item">
+                                <div className="info-item">
+                                    <span>Статус оплаты</span>
+                                </div>
+                                <div className="d-flex">
+                                    <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
+                                        onStatusChange(3);
+                                    }}>
+                                        Оплачен
                                     </div>
-                                    <div className="d-flex">
-                                        <div className={cn('btn', { 'btn btn-blue': item.status === 3, 'btn-gray': item.status !== 3 })} onClick={() => {
-                                            onStatusChange(3);
-                                        }}>
-                                            Оплачен
-                                        </div>
-                                        <div className={cn('btn', { 'btn btn-blue': item.status === 0, 'btn-gray': item.status !== 0 })} onClick={() => {
-                                            onStatusChange(0);
-                                        }}>
-                                            Не оплачен
-                                        </div>
-                                        <div className={cn('btn', { 'btn btn-blue': item.status === -1, 'btn-gray': item.status !== -1 })} onClick={() => {
-                                            onStatusChange(-1);
-                                        }}>
-                                            Отменён
-                                        </div>
+                                    <div className={cn('btn', { 'btn btn-blue': item.status === 0, 'btn-gray': item.status !== 0 })} onClick={() => {
+                                        onStatusChange(0);
+                                    }}>
+                                        Не оплачен
+                                    </div>
+                                    <div className={cn('btn', { 'btn btn-blue': item.status === -1, 'btn-gray': item.status !== -1 })} onClick={() => {
+                                        onStatusChange(-1);
+                                    }}>
+                                        Отменён
                                     </div>
                                 </div>
-                            ) : null}
+                            </div>
                         </div>
-                        <div className="col-3">
-                            <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
-                                Редактировать
-                            </button>
-                        </div>
+                        {item.status !== 3 ? (
+                            <div className="col-3">
+                                <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
+                                    Редактировать
+                                </button>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             </div>

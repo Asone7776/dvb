@@ -6,6 +6,8 @@ import { withDebounce } from '../functions';
 import { setDefaultLocale } from "react-datepicker";
 import ru from 'date-fns/locale/ru';
 import { selectOption } from "../types/users";
+import cn from 'classnames';
+import Spinner from "./Spinner";
 setDefaultLocale('ru');
 type DateInterface = Date | null;
 
@@ -13,8 +15,10 @@ interface OrderFiltersProps {
     users: selectOption[] | []
     onFilterChange: (param: string, value: any) => void
     onDateRange: (date: DateInterface[]) => void
+    excelLoading: boolean
+    onExport: () => void
 }
-const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRange }) => {
+const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRange, excelLoading, onExport }) => {
     const [dateRange, setDateRange] = useState<DateInterface[]>([null, null]);
     const [startDate, endDate] = dateRange;
 
@@ -69,7 +73,9 @@ const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRang
                         isClearable={true}
                     />
                 </div>
-                <div className="col-12 mb-3">
+            </div>
+            <div className="row">
+                <div className="col-9 mb-3">
                     <FilterSelect
                         placeholder={'Пользователи'}
                         isMulti
@@ -80,6 +86,11 @@ const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRang
                             }
                             onFilterChange('users', valueToSend);
                         }} />
+                </div>
+                <div className="col-3">
+                    <button className={cn('btn btn-blue w-100', { 'loading': excelLoading })} disabled={excelLoading} onClick={onExport}>
+                        {excelLoading ? <Spinner /> : 'Выгрузить отчёт'}
+                    </button>
                 </div>
             </div>
         </div>

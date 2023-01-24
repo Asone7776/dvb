@@ -102,3 +102,11 @@ export const base64ToArrayBuffer = (base64: string) => {
     }
     return bytes.buffer;
 }
+export const downloadFile = (url:string, filename:string) => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+};

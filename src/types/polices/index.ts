@@ -8,6 +8,9 @@ export interface PolicyFilterProps {
     from?: string | null
     to?: string | null
     today?: boolean
+    users?:any[]
+    status?:string
+    search?:string
 }
 export interface policeInitialStateType {
     savedPolicy: {
