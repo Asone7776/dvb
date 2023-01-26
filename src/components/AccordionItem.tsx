@@ -7,6 +7,8 @@ import { useAppDispatch } from '../redux/store';
 import { holdPolice } from "../redux/slices/policeSlice";
 import InfoItem from '../components/InfoItem';
 import { RISKS_DESCRIPTIONS } from '../risk-constants';
+import { tariffs } from "../constants";
+import { saveItem } from "../redux/slices/safeSlice";
 
 interface AccordionItemProps {
     item: OrderItem
@@ -20,6 +22,9 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
         setActive(!active);
     }
     const savePolice = () => {
+        if (item.term != null) {
+            dispatch(saveItem(tariffs[item.term]));
+        }
         dispatch(holdPolice(item));
         navigate(`/admin/new/edit/${item.id}`);
     }

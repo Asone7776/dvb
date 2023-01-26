@@ -46,7 +46,7 @@ export interface createFormData {
     ogrn: number
     phone: string
     email: string
-    tariff: number
+    tariff: any
     name: string
     signer: string
     position: string
