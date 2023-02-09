@@ -18,13 +18,23 @@ import moment from 'moment';
 import { parse } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
 import QuestionIcon from './icons/QuestionIcon';;
+import { tariffs } from "../constants";
 const allowed = ["BUSINESS_PROTECTION_CONSTRUCTIVE", "BUSINESS_PROTECTION_FINISHING_AND_EQUIPMENT"];
+
 const EditForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.updatedPolicy);
     const editFormData = useAppSelector(state => state.police.holdedPolice);
     const safe = useAppSelector(state => state.safe.data);
+    const packages = tariffs.filter(item => item.orderNo !== 0).map(item => {
+        return {
+            label: item.tariffName,
+            value: item.orderNo
+        }
+    });
+    const selectedTerm = packages.filter(item => item.value === editFormData?.term);
+
     console.log('safe', safe);
     // console.log('safe', editFormData);
     console.log('updated too', police);
@@ -62,6 +72,7 @@ const EditForm = () => {
             legal_type: editFormData?.form.legal_type,
             attorney: editFormData?.form.attorney,
             attorney_date: editFormData?.form.attorney_date ? parse(editFormData?.form.attorney_date, "dd.MM.yyyy", new Date()) : null,
+            tariff: editFormData?.term !== 0 ? { value: editFormData?.term, label: selectedTerm[0].label } : null
             // attorney_date: editFormData?.form.attorney_date ? editFormData?.form.attorney_date : null,
             // premium: safe ? safe.premium : undefined
         }
@@ -100,7 +111,6 @@ const EditForm = () => {
             legal_type: editFormData ? editFormData.form && editFormData.form.legal_type : null,
             document_type: data ? data.document_type && data.document_type.value : null,
             attorney_date: data ? moment(data.attorney_date).format('DD.MM.Y') : null,
-            tariff: safe ? safe.orderNo : 0,
             risks
         };
         if (safe && safe.orderNo === 0) {
@@ -123,6 +133,9 @@ const EditForm = () => {
                 }
             });
             objectToSend.variants = variants;
+            objectToSend.tariff = 0;
+        } else {
+            objectToSend.tariff = data ? data.tariff.value : null;
         }
         dispatch(updatePolicy(objectToSend));
     };
@@ -143,6 +156,24 @@ const EditForm = () => {
                                     })} />
                                     {errors.name && <span className="error-message">{errors.name.message}</span>}
                                 </div>
+                                {editFormData?.term !== 0 && (
+                                    <div className="form-group">
+                                        <h4>Пакет</h4>
+                                        <Controller
+                                            name="tariff"
+                                            control={control}
+                                            render={({ field }) => {
+                                                return (
+                                                    <ParentSimpleSelect
+                                                        options={packages}
+                                                        {...field}
+                                                    />
+
+                                                );
+                                            }}
+                                        />
+                                    </div>
+                                )}
                                 <h4>Реквизиты</h4>
                                 <div className="form-group">
                                     <h5>ИНН</h5>

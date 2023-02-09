@@ -154,11 +154,13 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             </div>
                         </div>
                         {item.status !== 3 ? (
+                            // !item.policy_url && (
                             <div className="col-3">
                                 <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
                                     Редактировать
                                 </button>
                             </div>
+                            // )
                         ) : null}
                     </div>
                 </div>
