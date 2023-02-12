@@ -54,3 +54,36 @@ export const calculatePolicy = createAsyncThunk(
     }
 );
 
+export const deletePolicy = createAsyncThunk(
+    "police/deletePolicy",
+    async (data: any, { rejectWithValue }) => {
+        try {
+            const response = await axiosAuth.delete(`/delete_policy/${data}`);
+            successNotify('Полис удалён');
+            return response.data.data;
+        } catch (error: any) {
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
+            }
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const reSendPolicy = createAsyncThunk(
+    "police/reSendPolicy",
+    async (data: any, { rejectWithValue }) => {
+        try {
+            const response = await axiosAuth.post(`/buy_policy/${data}`);
+            successNotify('Заявка переотправлена');
+            return response.data.data;
+        } catch (error: any) {
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
+            }
+            return rejectWithValue(error);
+        }
+    }
+);

@@ -7,24 +7,39 @@ import OrdersPagination from "../../components/OrdersPagination";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { PolicyFilterProps } from "../../types/polices";
 import { resetStatus } from '../../redux/slices/orderSlice';
+import { resetDeletePolice, resetReSendPolice } from '../../redux/slices/policeSlice';
 const TodayOrders: FC = () => {
     const dispatch = useAppDispatch();
     const orders = useAppSelector((state) => state.orders);
+    const deletedPolice = useAppSelector((state) => state.police.deletedPolicy);
+    const reSendedPolicy = useAppSelector((state) => state.police.reSendedPolicy);
     const [filterProps, setFilterProps] = useState<PolicyFilterProps>({
         paginated: true,
         page: 1,
         today: true
     });
+    
     useEffect(() => {
         dispatch(getOrders(filterProps));
-    }, [filterProps, orders.changeStatus.success]);
+    }, [filterProps, orders.changeStatus.success, deletedPolice.success, reSendedPolicy.success]);
 
     useEffect(() => {
         if (orders.changeStatus.success) {
             dispatch(resetStatus());
         }
     }, [orders.changeStatus]);
+    useEffect(() => {
+        if (reSendedPolicy.success) {
+            dispatch(resetReSendPolice());
+        }
+    }, [reSendedPolicy.success]);
 
+    useEffect(() => {
+        console.log(deletedPolice);
+        if (deletedPolice.success) {
+            dispatch(resetDeletePolice());
+        }
+    }, [deletedPolice.success]);
     const onFilterChange = (prop: string, value: any) => {
         setFilterProps({
             ...filterProps,

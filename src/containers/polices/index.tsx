@@ -11,10 +11,13 @@ import { PolicyFilterProps } from "../../types/polices";
 import { axiosAuth } from "../../axios-instances";
 import { successNotify, failureNotify } from "../../notifications";
 import { downloadFile } from "../../functions";
+import { resetDeletePolice, resetReSendPolice } from '../../redux/slices/policeSlice';
 const PolicyPage: FC = () => {
     const dispatch = useAppDispatch();
     const orders = useAppSelector((state) => state.orders);
     const users = useAppSelector((state) => state.users);
+    const deletedPolice = useAppSelector((state) => state.police.deletedPolicy);
+    const reSendedPolicy = useAppSelector((state) => state.police.reSendedPolicy);
     const [excelLoading, setExcelLoading] = useState(false);
     const [filterProps, setFilterProps] = useState<PolicyFilterProps>({
         paginated: true,
@@ -22,7 +25,7 @@ const PolicyPage: FC = () => {
     });
     useEffect(() => {
         dispatch(getOrders(filterProps));
-    }, [filterProps, orders.changeStatus.success]);
+    }, [filterProps, orders.changeStatus.success, deletedPolice.success, reSendedPolicy.success]);
 
     useEffect(() => {
         dispatch(getUsers());
@@ -32,6 +35,19 @@ const PolicyPage: FC = () => {
             dispatch(resetStatus());
         }
     }, [orders.changeStatus]);
+
+    useEffect(() => {
+        if (reSendedPolicy.success) {
+            dispatch(resetReSendPolice());
+        }
+    }, [reSendedPolicy.success]);
+
+    useEffect(() => {
+        if (deletedPolice.success) {
+            dispatch(resetDeletePolice());
+        }
+    }, [deletedPolice.success]);
+
     const onFilterChange = (prop: string, value: any) => {
         setFilterProps({
             ...filterProps,

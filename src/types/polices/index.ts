@@ -8,9 +8,9 @@ export interface PolicyFilterProps {
     from?: string | null
     to?: string | null
     today?: boolean
-    users?:any[]
-    status?:string
-    search?:string
+    users?: any[]
+    status?: string
+    search?: string
 }
 export interface policeInitialStateType {
     savedPolicy: {
@@ -27,6 +27,16 @@ export interface policeInitialStateType {
     calculatedPolicy: {
         loading: boolean
         data: number | null
+        error: any
+    },
+    deletedPolicy: {
+        loading: boolean
+        success:boolean
+        error: any
+    },
+    reSendedPolicy: {
+        loading: boolean
+        success:boolean
         error: any
     },
     holdedPolice: OrderItem | null

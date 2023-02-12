@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { savePolicy, updatePolicy, calculatePolicy } from '../actions/policeActions';
+import { savePolicy, updatePolicy, calculatePolicy, deletePolicy, reSendPolicy } from '../actions/policeActions';
 import { policeInitialStateType } from '../../types/polices/index';
 const initialState: policeInitialStateType = {
     savedPolicy: {
@@ -16,6 +16,16 @@ const initialState: policeInitialStateType = {
     calculatedPolicy: {
         loading: false,
         data: null,
+        error: null
+    },
+    deletedPolicy: {
+        loading: false,
+        success: false,
+        error: null
+    },
+    reSendedPolicy: {
+        loading: false,
+        success: false,
         error: null
     },
     holdedPolice: null
@@ -46,6 +56,16 @@ export const policeSlice = createSlice({
             state.calculatedPolicy.loading = false;
             state.calculatedPolicy.data = null;
             state.calculatedPolicy.error = null;
+        },
+        resetDeletePolice: (state) => {
+            state.deletedPolicy.loading = false;
+            state.deletedPolicy.success = false;
+            state.deletedPolicy.error = null;
+        },
+        resetReSendPolice: (state) => {
+            state.reSendedPolicy.loading = false;
+            state.reSendedPolicy.success = false;
+            state.reSendedPolicy.error = null;
         },
     },
     extraReducers: (builder) => {
@@ -103,9 +123,41 @@ export const policeSlice = createSlice({
             state.calculatedPolicy.error = action.payload;
             state.calculatedPolicy.data = null;
         })
+        //Delete
+        builder.addCase(deletePolicy.pending, (state) => {
+            state.deletedPolicy.loading = true;
+            state.deletedPolicy.success = false;
+            state.deletedPolicy.error = null;
+        })
+        builder.addCase(deletePolicy.fulfilled, (state) => {
+            state.deletedPolicy.loading = false;
+            state.deletedPolicy.success = true;
+            state.deletedPolicy.error = null;
+        })
+        builder.addCase(deletePolicy.rejected, (state, action) => {
+            state.deletedPolicy.loading = false;
+            state.deletedPolicy.success = false;
+            state.deletedPolicy.error = action.payload;
+        })
+        // Re send
+        builder.addCase(reSendPolicy.pending, (state) => {
+            state.reSendedPolicy.loading = true;
+            state.reSendedPolicy.success = false;
+            state.reSendedPolicy.error = null;
+        })
+        builder.addCase(reSendPolicy.fulfilled, (state) => {
+            state.reSendedPolicy.loading = false;
+            state.reSendedPolicy.success = true;
+            state.reSendedPolicy.error = null;
+        })
+        builder.addCase(reSendPolicy.rejected, (state, action) => {
+            state.reSendedPolicy.loading = false;
+            state.reSendedPolicy.success = false;
+            state.reSendedPolicy.error = action.payload;
+        })
     },
 })
 
-export const { resetSavedPolicy, holdPolice, resetSaveSuccess, resetUpdatePolicy, resetCalculatedPolicy } = policeSlice.actions;
+export const { resetSavedPolicy, holdPolice, resetSaveSuccess, resetUpdatePolicy, resetCalculatedPolicy, resetDeletePolice, resetReSendPolice } = policeSlice.actions;
 
 export default policeSlice.reducer;

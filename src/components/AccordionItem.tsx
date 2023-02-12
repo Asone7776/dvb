@@ -9,7 +9,9 @@ import InfoItem from '../components/InfoItem';
 import { RISKS_DESCRIPTIONS } from '../risk-constants';
 import { tariffs } from "../constants";
 import { saveItem } from "../redux/slices/safeSlice";
-
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { deletePolicy, reSendPolicy } from '../redux/actions/policeActions';
 interface AccordionItemProps {
     item: OrderItem
     onStatusChange: (status: number) => void
@@ -154,15 +156,64 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             </div>
                         </div>
                         {item.status !== 3 ? (
-                            // !item.policy_url && (
-                            <div className="col-3">
-                                <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
-                                    Редактировать
-                                </button>
-                            </div>
-                            // )
+                            !item.policy_url && (
+                                <div className="col-3">
+                                    <button className='btn btn-primary-with-border w-100' onClick={savePolice}>
+                                        Редактировать
+                                    </button>
+                                </div>
+                            )
                         ) : null}
                     </div>
+                    {item.has_save_policy_response || item.policy_url ? (
+                        <div className="row align-items-end">
+                            <div className="col-9">
+                                <div className="item">
+                                    <div className="info-item">
+                                        <span>Действия</span>
+                                    </div>
+                                    <div className="d-flex">
+                                        {item.policy_url && (
+                                            <div className={'btn btn btn-danger'} onClick={() => {
+                                                confirmAlert({
+                                                    message: 'Вы уверены что хотите удалить полис?',
+                                                    buttons: [
+                                                        {
+                                                            label: 'Да',
+                                                            onClick: () => dispatch(deletePolicy(item.id))
+                                                        },
+                                                        {
+                                                            label: 'Нет',
+                                                        }
+                                                    ]
+                                                });
+                                            }}>
+                                                Удалить
+                                            </div>
+                                        )}
+                                        {item.has_save_policy_response ? (
+                                            <div className={'btn btn btn-gray'} onClick={() => {
+                                                confirmAlert({
+                                                    message: 'Вы уверены что хотите переотправить полис?',
+                                                    buttons: [
+                                                        {
+                                                            label: 'Да',
+                                                            onClick: () => dispatch(reSendPolicy(item.id))
+                                                        },
+                                                        {
+                                                            label: 'Нет',
+                                                        }
+                                                    ]
+                                                });
+                                            }}>
+                                                Переотправить
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </div>

@@ -46,6 +46,7 @@ export interface OrderItem {
     form: any
     attorney: string
     attorney_date: string
+    has_save_policy_response: boolean
 }
 
 export interface OrderData {
