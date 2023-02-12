@@ -174,7 +174,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                                     </div>
                                     <div className="d-flex">
                                         {item.policy_url && (
-                                            <div className={'btn btn btn-danger'} onClick={() => {
+                                            <div className={'btn btn-danger'} onClick={() => {
                                                 confirmAlert({
                                                     message: 'Вы уверены что хотите удалить полис?',
                                                     buttons: [
@@ -192,7 +192,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                                             </div>
                                         )}
                                         {item.has_save_policy_response ? (
-                                            <div className={'btn btn btn-gray'} onClick={() => {
+                                            <div className={'btn btn-gray'} onClick={() => {
                                                 confirmAlert({
                                                     message: 'Вы уверены что хотите переотправить полис?',
                                                     buttons: [
