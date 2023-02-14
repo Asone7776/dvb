@@ -165,7 +165,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             )
                         ) : null}
                     </div>
-                    {item.has_save_policy_response || item.policy_url ? (
+                    {item.has_save_policy_response || !item.policy_url ? (
                         <div className="row align-items-end">
                             <div className="col-9">
                                 <div className="item">
@@ -173,7 +173,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                                         <span>Действия</span>
                                     </div>
                                     <div className="d-flex">
-                                        {item.policy_url && (
+                                        {!item.policy_url && (
                                             <div className={'btn btn-danger'} onClick={() => {
                                                 confirmAlert({
                                                     message: 'Вы уверены что хотите удалить полис?',
