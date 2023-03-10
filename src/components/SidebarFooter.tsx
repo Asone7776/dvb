@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import VskLogo from '../img/vsk-logo.svg';
+import { FC } from 'react';
+import VskLogo from '../img/vsk-logo.png';
 import ExitIcon from '../components/icons/ExitIcon';
 import NavBtn from './NavBtn';
 import Cookies from 'js-cookie';
@@ -20,7 +20,7 @@ const SidebarFooter: FC = () => {
             <div className="sidebar-footer">
                 <NavBtn onClick={logout} title='Выйти' icon={<ExitIcon />} />
                 <div className="vsk-logo">
-                    <img src={VskLogo} alt="vsk-logo" />
+                    <img style={{ maxWidth: 150 }} src={VskLogo} alt="vsk-logo" />
                 </div>
                 <p>1992–{new Date().getFullYear()} Страховое<br />акционерное общество «ВСК»</p>
             </div>
